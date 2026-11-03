@@ -1,0 +1,15 @@
+@if (saleDetailData) {
+    <section class="border-2 border-slate-200 px-5 py-10 rounded-lg space-y-3 shadow-2xl" >
+    <div class="w-full py-2">
+        <span routerLink="/profile/myShopping" class="flex items-center space-x-3 w-max cursor-pointer group">
+            <i class="fa-solid fa-circle-arrow-left fa-2xl text-dashboard-1 group-hover:text-dashboard-3"></i>
+            <h3 class="font-primary text-lg text-dashboard-5 font-medium group-hover:underline" >Volver</h3>
+        </span>
+    </div>
+    @if (saleDetailData.typePurchase == "Producto") {
+        <profile-product-sale-page [productData]="saleDetailData" ></profile-product-sale-page>
+    }@else {
+        <profile-service-sale-page [serviceData]="saleDetailData" ></profile-service-sale-page>
+    }
+</section>
+}

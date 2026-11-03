@@ -1,0 +1,153 @@
+<div>
+    <section class="flex justify-between px-96">
+        <div 
+        (click)="onChangePage('Id')"
+        class="flex flex-col  items-center space-y-3 cursor-pointer">
+            <i 
+            [ngClass]="stateService =='Id' ? 'bg-dashboard-1 text-white' : '' "
+            class="size-10 isActive   border-dashboard-1  font-primary pl-3 text-xl font-semibold border-2 rounded-full flex items-center justify-between"><h4>1</h4></i>
+            <h4 class="font-primary  text-dashboard-2 text-xl font-semibold" >Identificacion</h4>
+        </div>
+        <div 
+        (click)="onChangePage('Pay')"
+        class="flex flex-col  items-center space-y-3 cursor-pointer">
+            <i 
+            [ngClass]="stateService =='Pay' ? 'bg-dashboard-1 text-white' : '' "
+            class="size-10 isActive   border-dashboard-1  font-primary pl-3 text-xl font-semibold border-2 rounded-full flex items-center justify-between"><h4>2</h4></i>
+            <h4 class="font-primary  text-dashboard-2 text-xl font-semibold" >Pago</h4>
+        </div>
+    </section>
+</div>
+
+<section *ngIf="stateService == 'Id';else payTemplate" class="px-10 pt-10 space-y-3" >
+    <div class="flex items-center space-x-4">
+        <i class="w-10 h-10 flex items-center justify-center bg-dashboard-1 text-white rounded-full text-2xl" >1</i>
+        <h5 class="font-secondary text-2xl text-dashboard-2 font-semibold" >Identificacion</h5>
+    </div>
+     <h4 class="font-primary">Solicitamos unicamente los datos personales necesarios para la finalizacion de la compra</h4>
+     <form [formGroup]="myForm" class="grid grid-cols-2 gap-x-10 gap-y-5" >
+        <div class="flex flex-col col-span-1 space-y-4">
+            <label for="name" class="font-primary text-dashboard-1 text-xl font-medium" >Nombres</label>
+            <input 
+            formControlName="name"
+            id="name" type="text" placeholder="Nombres" class="outline-none border-2 border-dashboard-6 rounded-lg px-3 py-2 focus:border-dashboard-2" >
+            <span *ngIf="isValidField('name')" class="text-dashboard-8 font-primary font-medium text-sm" >
+                {{getFieldError('name')}}
+            </span>
+        </div>
+        <div class="flex flex-col col-span-1 space-y-4">
+            <label for="lastName" class="font-primary text-dashboard-1 text-xl font-medium" >Apellidos</label>
+            <input 
+            formControlName="lastName"
+            id="lastName" type="text" placeholder="Apellidos" class="outline-none border-2 border-dashboard-6 rounded-lg px-3 py-2 focus:border-dashboard-2" >
+            <span *ngIf="isValidField('lastName')" class="text-dashboard-8 font-primary font-medium text-sm" >
+                {{getFieldError('lastName')}}
+            </span>
+        </div>
+        <div class="flex flex-col col-span-1 space-y-4">
+            <label for="documentType" class="font-primary text-dashboard-1 text-xl font-medium" >Tipo de documento</label>
+            <select 
+            formControlName="documentType"
+            name="documentType" id="documentType" class="outline-none border-2 border-dashboard-6 rounded-lg px-3 py-2 focus:border-dashboard-2 cursor-pointer">
+                <option class="bg-dashboard-3 text-white font-medium" value="DNI">DNI</option>
+                <option class="bg-dashboard-3 text-white font-medium" value="RUC">RUC</option>
+            </select>
+        </div>
+
+        <div class="flex flex-col col-span-1 space-y-4">
+            <label for="documentNumber" class="font-primary text-dashboard-1 text-xl font-medium" >Documento</label>
+            <input 
+            formControlName="documentNumber"
+            id="documentNumber" type="text" placeholder="Documento" class="outline-none border-2 border-dashboard-6 rounded-lg px-3 py-2 focus:border-dashboard-2" >
+            <span *ngIf="isValidField('documentNumber')" class="text-dashboard-8 font-primary font-medium text-sm" >
+                {{getFieldError('documentNumber')}}
+            </span>
+        </div>
+
+        @if (myForm.get('documentType')?.value == 'RUC') {
+            <div class="flex flex-col col-span-2 space-y-4">
+                <label for="bussinessName" class="font-primary text-dashboard-1 text-xl font-medium" >Razon social</label>
+                <input 
+                [readOnly]="true"
+                formControlName="bussinessName"
+                id="bussinessName" type="text" placeholder="Razon social" class="outline-none border-2 border-dashboard-6 rounded-lg px-3 py-2 focus:border-dashboard-2" >
+            </div>
+        }
+
+        <div class="flex flex-col col-span-2 w-1/2 space-y-4">
+            <label for="cellPhoneNumber" class="font-primary text-dashboard-1 text-xl font-medium" >Telefono</label>
+            <input 
+            formControlName="cellPhoneNumber"
+            id="cellPhoneNumber" type="text" placeholder="Telefono" class="outline-none border-2 border-dashboard-6 rounded-lg px-3 py-2 focus:border-dashboard-2" >
+            <span *ngIf="isValidField('cellPhoneNumber')" class="text-dashboard-8 font-primary font-medium text-sm" >
+                {{getFieldError('cellPhoneNumber')}}
+            </span>
+        </div>
+
+        <div class="col-span-2 flex justify-center ">
+            <button
+            (click)="sendData()"
+            class="w-1/2 my-5 bg-dashboard-1 text-white py-2 rounded-lg font-primary font-semibold text-lg cursor-pointer hover:text-dashboard-3"
+            type="submit"
+            >
+                Ir para el pago
+            </button>
+        </div>
+    </form>
+</section>
+
+<ng-template #payTemplate>
+    <section class="px-10 pt-10 space-y-3">
+       <div class="flex items-center space-x-4">
+            <i class="w-10 h-10 flex items-center justify-center bg-dashboard-1 text-white rounded-full text-2xl">2</i>
+            <h5 class="font-secondary text-2xl text-dashboard-2 font-semibold" >Pago</h5>
+        </div>
+        <h4 class="font-primary">Recuerde que este pago es solo para reservar la cita</h4>
+    </section>
+
+    <div class="mx-9 py-10 space-y-4 w-1/2">
+        <div class="flex justify-between items-center">
+            <h3 class="text-dashboard-2 font-semibold text-lg ">Resumen de la reserva</h3>
+        </div>
+
+        <div class="">
+            <ul
+            class="border rounded-lg border-slate-200 p-2"
+            >
+                <li class="flex space-x-4 items-center font-primary">
+                    <shared-loading-image
+                        [classStyle]="'size-10'"
+                        [urlImage]="serviceData!.image[0].url"
+                        ></shared-loading-image>
+                    <div class="">
+                        <h4 class="text-dashboard-1 font-semibold">{{serviceData!.name}}</h4>
+                        <h5>{{priceService | currency:'PEN':'symbol-narrow':'1.2-2' }}</h5>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="font-primary">
+            <div class=" border-b-2 pb-4">
+                <section class="flex justify-between">
+                    <h4 class="text-dashboard-1 font-semibold text-lg">Subtotal</h4>
+                    <h5 class="text-dashboard-5 font-medium">{{priceService | currency:'PEN':'symbol-narrow':'1.2-2' }}</h5>
+                </section>
+               
+            </div>
+            <section class="flex justify-between">
+                <h4 class="text-dashboard-1 font-semibold text-lg">Total</h4>
+                <h5 class="text-dashboard-5 font-medium">{{priceService | currency:'PEN':'symbol-narrow':'1.2-2' }}</h5>
+            </section>
+        </div>
+
+        <button
+        (click)="goToPay()"
+        class="bg-dashboard-1 w-full flex items-center justify-center space-x-4 rounded-lg py-3 font-primary text-white hover:text-dashboard-3 cursor-pointer font-semibold"
+        type="button"
+        >
+            <i class="fa-solid fa-lock"></i>
+            <h3>Reservar cita</h3>
+        </button>
+    </div>
+</ng-template>

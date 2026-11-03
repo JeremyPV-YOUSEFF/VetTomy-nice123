@@ -1,0 +1,12 @@
+.li-1 {
+    color: #fff;
+}
+
+.li-1:hover {
+    color: #bbcef3;
+}
+
+.li-1.active-link{
+    color: #bbcef3;
+    font-weight: bold;
+}

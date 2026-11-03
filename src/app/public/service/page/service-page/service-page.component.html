@@ -1,0 +1,16 @@
+<shared-slider-image [type]="'Service'" ></shared-slider-image>
+<article class="px-g py-16 space-y-5">
+    <h3 class="title" >Atenciòn confiable</h3>
+    <h4 class="subtitle" >Nuestros servicios</h4>
+    @if (listService.length > 0) {
+        <div class="grid grid-cols-4 gap-10">
+            @for (service of listService; track $index) {
+                <service-service-card [cardService]="service" ></service-service-card>
+            }
+        </div>
+    }@else {
+        <shared-loading-text [type]="6" ></shared-loading-text>
+    }
+    
+</article>
+<shared-contact></shared-contact>

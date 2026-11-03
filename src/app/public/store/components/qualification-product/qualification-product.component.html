@@ -1,0 +1,21 @@
+<div class="space-y-5">
+    <h5 class="font-primary text-dashboard-2 font-semibold text-xl" >Resumen de opiniones</h5>
+    <ul class="space-y-2">
+        @for (item of ratingNumber; track $index) {
+            <li class="flex space-x-4 items-center">
+                <h6 class="font-primary text-dashboard-5 text-lg w-10 text-center">{{item}} </h6>
+                <p-progressBar class="w-96" color="#1f2b6c"  [value]="calcRating(item)"></p-progressBar>
+            </li>
+        }
+    </ul>
+</div>
+<div class="flex flex-col items-center justify-center space-y-4">
+    <h5 class="font-primary text-dashboard-2 font-semibold text-xl">Calificación general</h5>
+    <div class="flex items-center space-x-4">
+        <h3 class="text-7xl font-primary text-dashboard-5">{{ratingGeneral}}</h3>
+        <div class="">
+            <store-counter-start [ratingGeneral]="ratingGeneral" [sizeStart]="'text-5xl'"  ></store-counter-start>
+            <p class="font-primary text-lg  text-dashboard-3 font-semibold  text-end">{{reviewData?.totalItems}} reseñas</p>
+        </div>
+    </div>
+</div>

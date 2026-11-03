@@ -1,0 +1,41 @@
+<div class=" w-full h-full flex flex-col space-y-5" >
+    <section class=" grid grid-cols-2 gap-x-5 ">
+        <div class="">
+            <shared-loading-image
+            [altImage]="productData.name"
+            [urlImage]="productData.image[0].url"
+            [classStyle]="'w-full h-40'"
+            ></shared-loading-image>
+        </div>
+        <div class="flex flex-col justify-between">
+            <div class="">
+                <h4 class="font-secondary text-xl font-extrabold px-2 text-dashboard-2">{{productData.brandName}}</h4>
+                <h3 class="font-primary text-[1.4rem] font-semibold text-dashboard-1 px-2 line-clamp-2">{{productData.name}}</h3>
+            </div>
+            <div class="">
+                @if (productData.priceWithDiscount > 0) {
+
+                    <div class="flex justify-between items-center">
+                        <h6 class="font-primary text-sm font-medium text-dashboard-3 px-2 line-through">{{productData.price| currency:'PEN':'symbol-narrow':'1.2-2'  }}</h6>
+                        <h6 class="font-primary text-lg font-medium text-dashboard-5 px-2">{{productData.priceWithDiscount | currency:'PEN':'symbol-narrow':'1.2-2'  }}</h6>
+                    </div>
+                }@else {
+                    <h6 class="font-primary text-lg font-medium h-10 text-dashboard-5 px-2">{{productData.price | currency:'PEN':'symbol-narrow':'1.2-2'  }}</h6>  
+                }
+            </div>
+        </div>
+    </section>
+    <section class="flex justify-between space-x-8">
+        <button
+        type="button"
+        (click)="ref.close()"
+        class="bg-dashboard-2 w-full py-2 rounded-lg text-white font-primary hover:text-dashboard-3 cursor-pointer"
+        >Seguir comprando</button>
+        <button
+        [routerLink]="['/dashboard/shoppingCart']"
+        type="button"
+        (click)="ref.close()"
+        class="bg-dashboard-1 w-full py-2 rounded-lg text-white font-primary hover:text-dashboard-3 cursor-pointer"
+        >Ver mi carro</button>
+    </section>
+</div>

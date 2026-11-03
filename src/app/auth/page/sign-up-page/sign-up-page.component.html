@@ -1,0 +1,115 @@
+<article class="bg-white shadow-xl w-[56rem] h-[43rem] grid grid-cols-2">
+    <section 
+    class="font-primary  bg-dashboard-1 rounded-r-full flex items-center justify-center flex-col space-y-5">
+        <h3 class=" text-5xl text-white font-semibold">¡Hola!</h3>
+        <p class="text-sm text-white px-20" >Ingrese sus datos para que pueda acceder a todas las funciones del sitio</p>
+        <button 
+        type="button" 
+        [routerLink]="['/auth/sign-in']" routerLinkActive="router-link-active" 
+        class="w-max border-2 text-dashboard-3 text-xl cursor-pointer hover:border
+         hover:bg-dashboard-3 hover:text-dashboard-4 rounded-lg px-3 py-2 border-white" >Iniciar Sesión</button>    
+    </section>
+    <section class="flex flex-col items-center justify-center space-y-4 px-10">
+        <h4 class="font-primary text-4xl text-dashboard-2 font-semibold" >Registrarse</h4>
+        <auth-button-google (onClick)="registerByGoogle()" ></auth-button-google>
+        <h5 class="font-primary font-medium" >O</h5>
+        <form  [formGroup]="myForm"  (submit)="register()" class="space-y-4">
+            <div class="w-80">
+                <section class="flex bg-dashboard-3 px-2 py-2 w-full">
+                    <span class="pr-3">
+                        <i class="fa-regular fa-user fa-sm text-dashboard-5 text-lg"></i>
+                    </span>
+                    <input 
+                    class="outline-none h-full w-full font-secondary  text-dashboard-5 text-xl font-medium"
+                    formControlName="name" 
+                    type="text" 
+                    placeholder="Nombre">
+                </section>
+                <span *ngIf="isValidField('name')" class="text-dashboard-5 font-primary font-medium text-sm" >
+                    {{getFieldError('name')}}
+                </span>
+            </div>
+
+            <div >
+                <section class="flex bg-dashboard-3 px-2 py-2 " >
+                    <span class="pr-3">
+                        <i class="fa-regular fa-comment fa-sm text-dashboard-5 text-lg"></i>
+                    </span>
+                    <input 
+                    class="outline-none h-full w-full font-secondary  text-dashboard-5 text-xl font-medium"
+                    formControlName="lastName" 
+                    type="text" 
+                    placeholder="Apellidos">
+                </section>
+                <span *ngIf="isValidField('lastName')" class="text-dashboard-5 font-primary font-medium text-sm" >
+                    {{getFieldError('lastName')}}
+                </span>
+            </div>
+
+            <div class=" ">
+                <section class="flex bg-dashboard-3 px-2 py-2">
+                    <span class="pr-3">
+                        <i class="fa-regular fa-envelope fa-sm text-dashboard-5 text-lg"></i>
+                    </span>
+                    <input 
+                    class="outline-none h-full w-full font-secondary  text-dashboard-5 text-xl font-medium"
+                    formControlName="email" 
+                    type="text" 
+                    placeholder="Correo electronico">
+                </section>
+                <span *ngIf="isValidField('email')" class="text-dashboard-5 font-primary font-medium text-sm" >
+                    {{getFieldError('email')}}
+                </span>
+            </div>
+
+            <div >
+                <section class="flex bg-dashboard-3 px-2 py-2 ">
+                    <span class="pr-3">
+                        <i class="fa-solid fa-key fa-sm text-dashboard-5 text-lg"></i>
+                    </span>
+                    <input 
+                    class="outline-none h-full w-full font-secondary  text-dashboard-5 text-xl font-medium"
+                    formControlName="password" 
+                    type="password" 
+                    placeholder="Contraseña">
+                </section>
+                <span *ngIf="isValidField('password')" class="text-dashboard-5 font-primary font-medium text-sm" >
+                    {{getFieldError('password')}}
+                </span>
+            </div>
+            <div >
+                <section class="flex bg-dashboard-3 px-2 py-2 ">
+                    <span class="pr-3">
+                        <i class="fa-solid fa-lock fa-sm text-dashboard-5 text-lg"></i>
+                    </span>
+                    <input 
+                    class="outline-none h-full w-full font-secondary  text-dashboard-5 text-xl font-medium"
+                    formControlName="repassword" 
+                    type="password" 
+                    placeholder="Repetir contraseña">
+                </section>
+                <span *ngIf="isValidField('repassword')" class="text-dashboard-5 font-primary font-medium text-sm" >
+                    Ambas contraseñas deben de ser iguales
+                </span>
+            </div>
+
+            <button 
+            [disabled]="this.state == 'Loading'"
+            [ngClass]="{
+                'bg-dashboard-2 cursor-progress': this.state === 'Loading',
+                'bg-dashboard-3': this.state == 'Success',
+                'bg-red-400  cursor-not-allowed': this.state == 'Error',
+                'bg-dashboard-1 hover:text-dashboard-3 cursor-pointer': this.state == '',
+             }"
+            type="submit"
+            class=" flex items-center space-x-4 px-10 py-2 text-white font-primary rounded-xl text-xl font-semibold "
+            >
+                <h5>{{this.state=='Loading' ? 'Cargando' : (this.state == 'Error' ? 'Error' : 'Registrar'  )  }}</h5>
+                <i *ngIf="this.state == 'Loading'" class="fa-solid fa-circle-notch animate-spin"></i>
+            </button>
+        </form>
+    </section>
+</article>
+
+<p-toast></p-toast>
+

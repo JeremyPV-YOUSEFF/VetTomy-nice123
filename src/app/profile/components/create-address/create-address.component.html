@@ -1,0 +1,103 @@
+<section class="" >
+    <form [formGroup]="myForm" (submit)="onSubmit()"  class="grid grid-cols-3 gap-x-8 gap-y-10" >
+
+        <div class="col-span-1 flex flex-col space-y-3">
+            <label for="department" class="font-primary text-dashboard-1 text-xl font-medium" >Departamento</label>
+            <select 
+            class="outline-none border-2 border-dashboard-6 rounded-lg px-3 py-2 focus:border-dashboard-2"
+            formControlName="department" name="department" id="department" >
+                <option value="" hidden >Seleccionar departamento</option>
+                @for (item of departamentData; track $index) {
+                    <option class="bg-dashboard-3 text-white font-medium" value="{{item.departamento}}">{{item.departamento}}</option>
+                }
+            </select>
+            <span *ngIf="isValidField('department')" class="text-dashboard-8 font-primary font-medium text-sm" >
+                {{getFieldError('department')}}
+            </span>
+        </div>
+
+        <div class="col-span-1 flex flex-col space-y-3">
+            <label for="region" class="font-primary text-dashboard-1 text-xl font-medium" >Provincia</label>
+            <select 
+            class="outline-none border-2 border-dashboard-6 rounded-lg px-3 py-2 focus:border-dashboard-2"
+            formControlName="region" name="region" id="region" >
+                <option value="" class="bg-dashboard-3 text-white font-medium" hidden >Seleccionar provincia</option>
+                @for (item of provinceData; track $index) {
+                    <option class="bg-dashboard-3 text-white font-medium" value="{{item.provincia}}">{{item.provincia}}</option>
+                }
+            </select>
+            <span *ngIf="isValidField('region')" class="text-dashboard-8 font-primary font-medium text-sm" >
+                {{getFieldError('region')}}
+            </span>
+        </div>
+
+        <div class="col-span-1 flex flex-col space-y-3">
+            <label for="district" class="font-primary text-dashboard-1 text-xl font-medium" >Distrito</label>
+            <select 
+            class="outline-none border-2 border-dashboard-6 rounded-lg px-3 py-2 focus:border-dashboard-2"
+            formControlName="district" name="district" id="department" >
+                <option value="" hidden >Seleccionar distritos</option>
+                @for (item of districtData; track $index) {
+                    <option class="bg-dashboard-3 text-white font-medium" value="{{item.distrito}}">{{item.distrito}}</option>
+                }
+            </select>
+            <span *ngIf="isValidField('district')" class="text-dashboard-8 font-primary font-medium text-sm" >
+                {{getFieldError('district')}}
+            </span>
+        </div>
+
+        <div class="col-span-2 flex flex-col space-y-3">
+            <label for="street" class="font-primary text-dashboard-1 text-xl font-medium">Calle / Avenida</label>
+            <input formControlName="street" type="text" id="street" placeholder="Ejemplo : Jr. Sauces y Junin"
+            class="outline-none border-2 border-dashboard-6 rounded-lg px-3 py-2 focus:border-dashboard-2" >
+            <span *ngIf="isValidField('street')" class="text-dashboard-8 font-primary font-medium text-sm" >
+                {{getFieldError('street')}}
+            </span>
+        </div>
+
+        <div class="col-span-1 flex flex-col space-y-3">
+            <label for="streetNumber" class="font-primary text-dashboard-1 text-xl font-medium">Numero</label>
+            <input formControlName="streetNumber" type="text" id="streetNumber" placeholder="Ejemplo: 234"
+            class="outline-none border-2 border-dashboard-6 rounded-lg px-3 py-2 focus:border-dashboard-2" >
+            <span *ngIf="isValidField('streetNumber')" class="text-dashboard-8 font-primary font-medium text-sm" >
+                {{getFieldError('streetNumber')}}
+            </span>
+        </div>
+
+        <div class="col-span-3 flex justify-between ">
+            <button (click)="onClose()" class="bg-dashboard-3 px-10 py-2 rounded-lg text-dashboard-5 font-semibold text-lg hover:text-dashboard-1 cursor-pointer"
+            type="button" >Cancelar</button>
+            
+            @if (this.config.data) {
+                <button 
+                (click)="updateAddress()"
+                [disabled]="this.state == 'Loading'"
+                [ngClass]="{
+                    'bg-dashboard-2 cursor-progress': this.state === 'Loading',
+                    'bg-dashboard-3': this.state == 'Success',
+                    'bg-red-400  cursor-not-allowed': this.state == 'Error',
+                    'bg-dashboard-1 hover:text-dashboard-3 cursor-pointer': this.state == '',
+                 }"
+                class="bg-dashboard-1 px-10 py-2 rounded-lg text-white font-semibold text-lg hover:text-dashboard-3 cursor-pointer"
+                type="button" >
+                    <h5>{{this.state=='Loading' ? 'Cargando' : (this.state == 'Error' ? 'Error' : 'Editar direccion'  )  }}</h5>
+                    <i *ngIf="this.state == 'Loading'" class="fa-solid fa-circle-notch animate-spin"></i>
+                </button>
+            }@else {
+                <button 
+            [disabled]="this.state == 'Loading'"
+            [ngClass]="{
+                'bg-dashboard-2 cursor-progress': this.state === 'Loading',
+                'bg-dashboard-3': this.state == 'Success',
+                'bg-red-400  cursor-not-allowed': this.state == 'Error',
+                'bg-dashboard-1 hover:text-dashboard-3 cursor-pointer': this.state == '',
+             }"
+            class="bg-dashboard-1 px-10 py-2 rounded-lg text-white font-semibold text-lg hover:text-dashboard-3 cursor-pointer"
+            type="submit" >
+                <h5>{{this.state=='Loading' ? 'Cargando' : (this.state == 'Error' ? 'Error' : 'Confirmar direccion'  )  }}</h5>
+                <i *ngIf="this.state == 'Loading'" class="fa-solid fa-circle-notch animate-spin"></i>
+            </button>
+            }
+        </div>
+    </form>
+</section>

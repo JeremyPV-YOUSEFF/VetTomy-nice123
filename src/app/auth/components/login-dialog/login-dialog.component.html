@@ -1,0 +1,63 @@
+<section class="flex flex-col justify-center items-center space-x-4 space-y-4">
+    <div class="flex items-center flex-col space-y-3">
+        <h4 class="font-primary text-4xl text-dashboard-2 font-semibold" >Iniciar Sesión</h4>
+        <div class="">
+            <auth-button-google (onClick)="submitWithGoogle()"></auth-button-google>
+        </div>
+        <h5 class="font-primary font-medium" >O</h5>
+    </div>
+    <form [formGroup]="myForm"  class="space-y-5" >
+        <div class=" w-80">
+            <section class="flex bg-dashboard-3 px-2 py-2">
+                <span class="pr-3">
+                    <i class="fa-regular fa-envelope fa-sm text-dashboard-5 text-lg"></i>
+                </span>
+                <input 
+                class="outline-none h-full w-full font-secondary  text-dashboard-5 text-xl font-medium"
+                formControlName="email" 
+                type="text" 
+                placeholder="Correo electronico">
+            </section>
+            <span *ngIf="isValidField('email')" class="text-dashboard-5 font-primary font-medium text-sm" >
+                {{getFieldError('email')}}
+            </span>
+        </div>
+
+        <div >
+            <section class="flex bg-dashboard-3 px-2 py-2 ">
+                <span class="pr-3">
+                    <i class="fa-solid fa-key fa-sm text-dashboard-5 text-lg"></i>
+                </span>
+                <input 
+                class="outline-none h-full w-full font-secondary  text-dashboard-5 text-xl font-medium"
+                formControlName="password" 
+                type="password" 
+                placeholder="Contraseña">
+            </section>
+            <span *ngIf="isValidField('password')" class="text-dashboard-5 font-primary font-medium text-sm" >
+                {{getFieldError('password')}}
+            </span>
+        </div>
+
+        <button 
+        (click)="signIn()"
+        [disabled]="this.state == 'Loading'"
+        [ngClass]="{
+            'bg-dashboard-2 cursor-progress': this.state === 'Loading',
+            'bg-dashboard-3': this.state == 'Success',
+            'bg-red-400  cursor-not-allowed': this.state == 'Error',
+            'bg-dashboard-1 hover:text-dashboard-3 cursor-pointer': this.state == '',
+         }"
+        type="submit"
+        class=" flex items-center w-full justify-center space-x-4 px-10 py-2 text-white font-primary rounded-xl text-xl font-semibold "
+        >
+        <h5>{{this.state=='Loading' ? 'Cargando' : (this.state == 'Error' ? 'Error' : 'Iniciar Sesión'  )  }}</h5>
+        <i *ngIf="this.state == 'Loading'" class="fa-solid fa-circle-notch animate-spin"></i>
+    </button>
+    <h5>Si no tienes una cuenta, registrate primero</h5>
+    <h4 
+    (click)="ref.close()"
+    routerLink="/auth/sign-up"
+    class="text-center text-dashboard-2 underline text-lg cursor-pointer hover:text-dashboard-1">Registrarse</h4>
+    </form>
+</section>

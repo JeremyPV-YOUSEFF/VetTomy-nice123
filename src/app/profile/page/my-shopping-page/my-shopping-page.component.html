@@ -1,0 +1,107 @@
+<section class="border-2 border-slate-200 px-5 py-10 rounded-lg space-y-3 shadow-2xl" >
+    <h2 class="uppercase font-secondary text-2xl text-dashboard-2 font-black" >Mis compras</h2>
+    <p class="font-primary text-lg text-dashboard-5 font-medium" >Aqui encontraras tus compras realizadas</p>
+    @if (sale && sale.totalItems>0) {
+        <profile-filter-sale 
+    (sendSort)="receiveChangeSort($event)"
+    (sendTypePurchase)="receiveChangeTypePurchase($event)" [receiveSaleData]="sale" 
+    (sendPage)="receiveChangePage($event)" ></profile-filter-sale>
+    <ul class="space-y-5">
+        @for (item of SaleData ; track $index) {
+            @if(item.typePurchase == "Producto"){
+                <li
+                class="border border-dashboard-3 px-3 py-4 rounded-lg flex flex-col font-primary"
+                >
+                    <div class="flex flex-col border-b-2 border-dashboard-3 pb-3">
+                        <h4 class="text-dashboard-2 text-lg font-medium">Producto</h4>
+                        <div class="flex justify-between">
+                            <div class="flex space-x-4">
+                                <h4 class="text-dashboard-5 text-lg font-medium" >Fecha : </h4>
+                                <h4 class="text-dashboard-1 text-lg font-medium" >{{item.date | date:"d 'de' MMMM 'del' y, h : mm" }} </h4>
+                            </div>
+                            <h5 
+                            [ngClass]="{
+                                'text-dashboard-8': item.state == 'Cancelado',
+                                'text-dashboard-7' : item.state == 'Producto entregado',
+                                'text-dashboard-1' : item.state == 'Llevando producto',
+                                'text-dashboard-2' : item.state == 'Preparando pedido',
+                                'text-dashboard-5' : item.state == 'Validando el pago',
+                            }"
+                            class="text-lg  font-semibold">{{item.state}}</h5>
+                        </div>
+                        <div class="">
+                            <h4 class="font-medium text-lg " >Fecha de entrega : <span class="text-dashboard-1 font-semibold" >{{ item.deliveryDate| date:'dd/MM/YYYY'  }}</span></h4>
+                            <h4 class="font-medium text-lg " >Tipo de entrega: <span class="text-dashboard-1 font-semibold" >{{ item.deliveryType }}</span></h4>
+                            <h4 class="font-medium text-lg " >Subtotal : <span class="text-dashboard-1 font-semibold" >{{ (+item.total - +item.deliveryPrice)  | currency:'PEN':'symbol-narrow':'1.2-2' }}</span></h4>
+                            @if (item.deliveryPrice>0) {
+                                <h4 class="font-medium text-lg" >Delivery : <span class="text-dashboard-1 font-semibold" >{{  item.deliveryPrice | currency:'PEN':'symbol-narrow':'1.2-2' }}</span></h4>
+                            }
+                            <h4 class="font-medium text-lg" >Total : <span class="text-dashboard-1 font-semibold" >{{item.total | currency:'PEN':'symbol-narrow':'1.2-2' }}</span></h4>
+                        </div>
+                    </div>
+                    <div class="flex pt-3 space-x-3">
+                        <shared-loading-image
+                        [urlImage]="item.data[0].productUrl"
+                        [classStyle]="'size-14'"
+                        ></shared-loading-image>
+                        <div class="w-[30rem]">
+                            <h3 class="text-dashboard-2 font-semibold text-lg">{{item.data[0].productName}}</h3>
+                            <h5 class="text-dashboard-5 font-medium" >Cantidad : {{item.data[0].quantity}}</h5>
+                            <h6 class="text-dashboard-1 font-semibold" >{{item.data[0].price | currency:'PEN':'symbol-narrow':'1.2-2'  }}</h6>
+                        </div>
+                        <div class="w-48 flex justify-center items-center ">
+                            <button
+                            [routerLink]="['/profile/saleDetail',item.saleNumber]"
+                            type="button" 
+                            class="bg-dashboard-1 px-4 py-2 text-lg font-semibold rounded-lg text-white hover:text-dashboard-3 cursor-pointer" >Ver mas detalles</button>
+                        </div>
+                    </div>
+                </li>
+            }@else {
+                <li
+                class="border border-dashboard-3 px-3 py-4 rounded-lg flex flex-col font-primary"
+                >
+                    <div class="flex flex-col border-b-2 border-dashboard-3 pb-3">
+                        <h4 class="text-dashboard-2 text-lg font-medium">Servicio</h4>
+                        <div class="flex justify-between">
+                            <div class="flex space-x-4">
+                                <h4 class="text-dashboard-5 text-lg font-medium" >Fecha : </h4>
+                                <h4 class="text-dashboard-1 text-lg font-medium" >{{item.date | date:"d 'de' MMMM 'del' y, h : mm" }} </h4>
+                            </div>
+                            <h5 
+                            [ngClass]="{
+                                'text-dashboard-8': item.state == 'Cancelado',
+                                'text-dashboard-7' : item.state == 'Reserva confirmada',
+                                'text-dashboard-5' : item.state == 'Validando el pago',
+                            }"
+                            class="text-lg  font-semibold">{{item.state}}</h5>
+                        </div>
+                        <div class="">
+                            <h4 class="font-medium text-lg " >Subtotal : <span class="text-dashboard-1 font-semibold" >{{ (+item.subTotal)  | currency:'PEN':'symbol-narrow':'1.2-2' }}</span></h4>
+                            <h4 class="font-medium text-lg" >Total : <span class="text-dashboard-1 font-semibold" >{{item.total | currency:'PEN':'symbol-narrow':'1.2-2' }}</span></h4>
+                        </div>
+                    </div>
+                    <div class="flex pt-3 space-x-3">
+                        <shared-loading-image
+                        [urlImage]="item.data[0].productUrl"
+                        [classStyle]="'size-14'"
+                        ></shared-loading-image>
+                        <div class="w-[30rem]">
+                            <h3 class="text-dashboard-2 font-semibold text-lg">{{item.data[0].productName}}</h3>
+                            <h6 class="text-dashboard-1 font-semibold" >{{item.data[0].price | currency:'PEN':'symbol-narrow':'1.2-2'  }}</h6>
+                        </div>
+                        <div class="w-48 flex justify-center items-center ">
+                            <button
+                            [routerLink]="['/profile/saleDetail',item.saleNumber]"
+                            type="button" 
+                            class="bg-dashboard-1 px-4 py-2 text-lg font-semibold rounded-lg text-white hover:text-dashboard-3 cursor-pointer" >Ver mas detalles</button>
+                        </div>
+                    </div>
+                </li>
+            }
+        }
+    </ul>
+    }@else {
+        <h4 class="font-primary text-lg text-dashboard-5" >No hay ninguna venta</h4>
+    }
+</section>

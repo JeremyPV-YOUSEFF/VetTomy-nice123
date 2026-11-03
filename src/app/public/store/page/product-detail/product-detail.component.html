@@ -1,0 +1,85 @@
+@if (productData) {
+    <article class="my-16">
+        <section class=" mx-g rounded-lg border-2 border-slate-200 grid grid-cols-12 ">
+            <div class="col-span-9 grid grid-cols-10">
+                <div class="col-span-5">
+                    <shared-loading-image  
+                    [altImage]="productData.name"
+                    [urlImage]="productData.image[0].url"
+                    [classStyle]="'w-full h-full'"
+                    ></shared-loading-image>
+                </div>
+                <div class="col-span-5 flex flex-col justify-between px-3 py-4">
+                    <div class="border-b-2 border-slate-300 py-3">
+                        <h4 class="uppercase font-primary font-bold text-lg text-start text-dashboard-2" >{{productData.brandName}}</h4>
+                        <h3 class="font-secondary text-[1.8rem] font-bold text-start  text-dashboard-1 capitalize">{{productData.name}}</h3>
+                    </div>
+                    <div class="">
+                        @if (productData.priceWithDiscount>0) {
+                            <h5 class="text-dashboard-3 text-2xl line-through ">{{productData.price | currency:'PEN':'symbol-narrow':'1.2-2' }}</h5>
+                            <h4 class="text-dashboard-5 text-4xl font-semibold">{{productData.priceWithDiscount | currency:'PEN':'symbol-narrow':'1.2-2' }}</h4>
+                        }@else {
+                            <h4 class="text-dashboard-5 text-4xl font-semibold">{{productData.price | currency:'PEN':'symbol-narrow':'1.2-2' }}</h4>
+                        }
+                    </div>
+                    <div class="font-primary space-y-3 flex flex-col w-full items-center">
+                        <div class="flex space-x-4 w-full justify-between items-center ">
+                            <store-counter-stock 
+                            [type]="1" 
+                            (sendValue)="receiveValue($event)"
+                            [stock]="productData.stock" ></store-counter-stock>
+                            <h4 class="text-sm text-dashboard-2 font-semibold" >¡{{productData.stock}} unidades disponibles!</h4>
+                        </div>
+                        <button 
+                        (click)="addProduct(productData)"
+                        class="w-full font-medium text-lg cursor-pointer px-3 py-2 bg-dashboard-1 rounded-lg text-white hover:text-dashboard-3 hover:font-semibold"
+                        type="button">Añadir al carrito</button>
+                        <button 
+                        (click)="addProductRedirection(productData)"
+                        class="w-full font-medium  text-lg cursor-pointer px-3 py-2 bg-dashboard-3 rounded-lg text-white hover:text-dashboard-2 hover:font-semibold"
+                        type="button">Comprar ahora</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-span-3 space-y-4 bg-dashboard-4 m-4 rounded-lg px-3 py-2">
+                <ul class="space-y-6">
+                    @for (item of getInfoProduct; track $index) {
+                        <li class="flex items-center space-x-4">
+                            <i class="{{item.icon}} text-dashboard-1"></i>
+                            <h4 class="font-primary text-dashboard-2 font-semibold text-[1rem]" >{{item.description}}</h4>
+                        </li>
+                    }
+                </ul>
+                <div class="space-y-3">
+                    <h4 class="font-secondary text-2xl font-bold text-dashboard-1">Medios de pago</h4>
+                    <ul class="space-y-3">
+                        @for (item of meansPayment; track $index) {
+                            <li class="flex space-x-3 items-center justify-between">
+                                <h4 class="font-primary text-[0.8rem] text-dashboard-1 font-semibold">{{item.name}}</h4>
+                                @for (image of item.image; track $index) {
+                                    <img [src]="image.url" alt="{{item.name}}" class="size-6 rounded-2xl">
+                                }
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <home-slider-product [typeScreen]="''"  ></home-slider-product>
+        <section class="mx-g">
+            <store-about-product [productData]="productData" ></store-about-product>
+            <store-rating-product
+                (refresh)="recieveRefresh($event)"
+                [type]="'productDetails'"
+                [productId]="productId" 
+                [reviewData]="reviewData" >
+                
+            </store-rating-product>
+        </section>
+    </article>
+}@else {
+    <div class="mx-g">
+        <shared-loading-text [type]="10" ></shared-loading-text>
+    </div>
+}

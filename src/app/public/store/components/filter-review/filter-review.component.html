@@ -1,0 +1,35 @@
+<form [formGroup]="myForm" class="from-primary text-[1rem] font-medium font-primary space-x-4 flex justify-between py-3">
+    <div class="">
+    </div>
+    <div class="space-x-5 flex items-center">
+        <h4 
+        (click)="restartFilter()"
+        *ngIf="this.myForm.get('ratingStar')?.value != 0 || myForm.get('filter')?.value != '' "
+        class="bg-dashboard-1 px-2 py-2 rounded-lg text-white cursor-pointer" >Borrar filtros</h4>
+        <label for="ratingStar">
+            <select 
+            formControlName="ratingStar" 
+            name="ratingStar" 
+            id="ratingStar" 
+            class="cursor-pointer font-medium text-white text-lg rounded-lg 
+            px-3 outline-none hover:bg-dashboard-3 bg-dashboard-3 py-2 border-2 border-dashboard-3 " >
+                <option value="" hidden class="" >Calificación</option>
+                @for (item of [].constructor(5); track $index) {
+                    <option 
+                    class="bg-slate-100 font-medium text-[1rem] focus:bg-dashboard-3 text-dashboard-5 hover:bg-dashboard-1" [value]="$index+1">{{$index+1}} estrella</option>
+                }
+            </select>
+        </label>
+        <label for="relevance">
+            <select 
+            formControlName="filter"
+            name="relevance" id="relevance" class="cursor-pointer font-medium text-white text-lg rounded-lg 
+            px-3 outline-none hover:bg-dashboard-3 bg-dashboard-3 py-2 border-2 border-dashboard-3 " >
+                <option value="" hidden >Ordenar por :</option>
+                @for (item of dataSort; track $index) {
+                    <option [value]="item.sort" class="bg-slate-100 font-medium text-[1rem] focus:bg-dashboard-3 text-dashboard-5 hover:bg-dashboard-1" >{{item.name}}</option>
+                }
+            </select>
+        </label>
+    </div>
+</form>

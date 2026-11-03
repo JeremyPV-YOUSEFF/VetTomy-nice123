@@ -1,0 +1,23 @@
+<section class="">
+    <h3 class="font-secondary text-3xl py-3 text-dashboard-1 font-semibold" >Acerca del producto</h3>
+    <div class="border-2 border-slate-200 rounded-lg px-3 py-5 space-y-5">
+        <section class="space-y-3">
+            <h4 class="font-primary font-semibold text-dashboard-2 text-xl" >Descripciòn: </h4>
+            <p class="font-primary text-lg text-dashboard-5" >{{productData.description}}</p>
+        </section>
+       <ul class="font-primary space-y-3" >
+            <li class="flex justify-between">
+                <h4 class="text-dashboard-2 font-medium text-lg">Animal:</h4>
+                <p class="text-dashboard-5 text-lg">{{productData.typePet == '' ? 'Ninguno' : productData.typePet }}</p>
+            </li>
+            <li class="flex justify-between">
+                <h4 class="text-dashboard-2 font-medium text-lg">Peso:</h4>
+                <p class="text-dashboard-5 text-lg">{{productData.weight == null ? 'Ninguno' : productData.weight }}</p>
+            </li>
+            <li class="flex justify-between">
+                <h4 class="text-dashboard-2 font-medium text-lg">Dimensiones:</h4>
+                <p class="text-dashboard-5 text-lg">{{productData.dimensions == null ? 'Ninguno' : productData.dimensions}}</p>
+            </li>
+       </ul>
+    </div>
+</section>

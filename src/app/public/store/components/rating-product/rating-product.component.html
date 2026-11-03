@@ -1,0 +1,69 @@
+<section class="py-10">
+    <h3 
+    class="font-secondary text-3xl py-3 text-dashboard-1 font-semibold" >{{type == 'productDetails' ? 'Comentarios de este producto' : 'Comentarios' }}</h3>
+    <div class="border-2 border-slate-200 rounded-lg px-3 py-5 space-y-5 grid grid-cols-2">
+        <store-qualification-product 
+            [recieveReviewData]="sendReviewData"
+            class="grid grid-cols-2 col-span-2" >
+        </store-qualification-product>
+        <div class="col-span-2 space-y-3">
+            <store-filter-review
+            (sendFilter)="receiveFilter($event)"
+            (sendRatingStar)="receiveRaitingStar($event)"
+            ></store-filter-review>
+            <div class="flex justify-end">
+                <button 
+                (click)="newReview()"
+                *ngIf="type == 'productDetails' && reviewList.length>0  "
+                type="button" 
+                class="cursor-pointer hover:bg-dashboard-3 group text-start flex items-center space-x-4 border-2 w-max px-4 py-2 rounded-lg border-dashboard-3">
+                    <i class="fa-solid fa-pen group-hover:text-white text-dashboard-2"></i>
+                    <h5 class="font-primary group-hover:text-white font-semibold ">Dejar un comentario</h5>
+                </button>
+            </div>
+            
+            <div class="space-y-4 *:border *:border-slate-200 *:rounded-lg *:px-2 *:py-3">
+                @for (review of reviewList; track $index) {
+                    <article class="flex justify-between *:py-3">
+                        <section class="flex space-x-6">
+                            <shared-loading-image 
+                                [classStyle]="'rounded-full size-14'"
+                                [urlImage]="review.bannerUrl">
+                            </shared-loading-image>
+                            <div class="flex flex-col font-primary">
+                                @if (review.creationDate) {
+                                    <h5 class="text-dashboard-1 font-semibold">{{review.creationDate   |date:'dd  MMMM, yyyy' }}</h5>
+                                }@else {
+                                    <h5 class="text-dashboard-1   font-semibold">{{todayDate   |date:'dd  MMMM, yyyy' }}</h5>
+                                }
+                                <h4 class="text-dashboard-2 font-secondary  font-semibold text-2xl">{{'@'}}{{review.customerName}}</h4>
+                                <p class="text-dashboard-5" >{{review.comment}}</p>
+                            </div>
+                        </section>
+                        <section class="pl-40 ">
+                            <store-counter-start [ratingGeneral]="review.productRating" [sizeStart]="'text-3xl'" ></store-counter-start>
+                        </section>
+                    </article>
+                }@empty {
+                    <div class="flex justify-between items-center space-y-4">
+                        <div class="">
+                            <h4 class="font-primary text-lg text-dashboard-5 font-semibold">Este producto no tiene ningun comentario</h4>
+                            <h5 class="text-base font-primary text-dashboard-2">Se el primero en dejar uno ... 
+                            </h5>
+                        </div>
+                        <button 
+                        (click)="newReview()"
+                        *ngIf="type == 'productDetails'"
+                        type="button" 
+                        class="cursor-pointer hover:bg-dashboard-3 group text-start flex items-center space-x-4 border-2 w-max px-4 py-2 rounded-lg border-dashboard-3">
+                            <i class="fa-solid fa-pen group-hover:text-white text-dashboard-2"></i>
+                            <h5 class="font-primary group-hover:text-white font-semibold ">Dejar un comentario</h5>
+                        </button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<p-toast></p-toast>

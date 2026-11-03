@@ -1,0 +1,30 @@
+<article  class="py-16 space-y-5" >
+    <h3 class="title">Calidad y precios</h3>
+    <h4 class="subtitle pb-8">Nuestros productos</h4>
+    <section class="grid grid-cols-12 gap-10" >
+        <store-filter-product 
+        (brands)="recieveBrands($event)"
+        (typePet)="recieveTypePets($event)"
+        (categories)="recieveCategories($event)"
+        (deleteParams)="deleteParams()"
+        (searchProduct)="receiveSearchProduct($event)"
+        class="col-span-3" ></store-filter-product>
+        <div class="col-span-9 grid grid-cols-4 gap-3">
+            <div class="col-span-4">
+                <store-sort-product class=""
+                [dataProduct]="productList"
+                (sendSortProduct)="receiveSort($event)"
+                (sendCurrentPage)="receiveCurrentPage($event)"
+                ></store-sort-product>
+                <div class="w-full grid grid-cols-4 gap-3 py-4">
+                    @for (product of productList?.data; track $index) {
+                        <store-card-product [product]="product"></store-card-product>
+                    }@empty {
+                        <h5 class="flex col-span-4 text-2xl animate-pulse text-dashboard-2 font-primary h-screen py-6">Producto no encontrado ...</h5>
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+
+</article>

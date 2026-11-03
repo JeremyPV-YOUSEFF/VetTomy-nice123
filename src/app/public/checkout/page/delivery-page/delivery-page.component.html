@@ -1,0 +1,95 @@
+<section class="mx-g my-10 px-5 py-6 rounded-lg shadow-2xl flex flex-col space-y-4" >
+    <div class="flex items-center space-x-4">
+        <i class="w-10 h-10 flex items-center justify-center bg-dashboard-1 text-white rounded-full text-2xl" >2</i>
+        <h5 class="font-secondary text-2xl text-dashboard-2 font-semibold" >Entrega</h5>
+    </div>
+    <h4 class="font-primary">Recuerde que todas las entregas solo se realizan en Huancayo</h4>
+    <div class="w-full flex justify-center *:w-72 font-primary py-4">
+        <section (click)="onChangePage(1)" 
+        [ngClass]="value == 1 ? 'bg-dashboard-1 text-white' : 'border-2 border-dashboard-1 text-dashboard-5' "
+        class="cursor-pointer flex items-center px-6 space-x-5 rounded-l-xl py-2" >
+            <i class="fa-solid fa-truck fa-lg "></i>
+            <h4 class="text-lg  font-semibold" >Envio a domicilio</h4>
+        </section>
+        <section 
+        (click)="onChangePage(2)" 
+        [ngClass]="value == 2 ? 'bg-dashboard-1 text-white' : 'border-2 border-dashboard-1 text-dashboard-5' "
+        class="cursor-pointer flex items-center px-6 space-x-5 rounded-r-xl py-2" >
+            <i class="fa-solid fa-store fa-lg "></i>
+            <h4 class="text-lg  font-semibold" >Recojo en tienda</h4>
+        </section>
+    </div>
+
+    <div *ngIf="value == 1" class="space-y-2" >
+        <ng-container *ngIf="addressData.length > 0 ; else create "  >
+            <h3 class="text-dashboard-5 text-lg font-medium" >Direccion de entrega :</h3>
+            <div class="bg-dashboard-3 rounded-lg px-4 py-2 flex justify-between items-center">
+                <div class="flex items-center">
+                    <i class="fa-solid fa-location-dot text-white fa-lg pr-2"></i>
+                    <h4 class="text-dashboard-5 text-lg font-medium" >{{addressInformation?.region}}</h4>
+                    <h4 class="text-dashboard-5 text-lg font-medium" >, {{addressInformation?.district}}</h4>
+                    <h4 class="text-dashboard-5 text-lg pr-2" > - {{addressInformation?.street}}</h4>
+                    <h6 class="text-dashboard-5 text-lg" >{{addressInformation?.streetNumber}}</h6>
+                </div>
+                <h5 
+                (click)="openListAddress()"
+                class="text-dashboard-1 font-semibold underline cursor-pointer hover:text-white" >Cambiar direccion</h5>
+            </div>
+        </ng-container>
+
+        <ng-template #create >
+            <section class="space-y-3">
+                <h3 class="text-dashboard-5 text-lg font-medium" >Direccion de entrega :</h3>
+                <button 
+                (click)="newAddress()"
+                type="button" class="bg-dashboard-1 px-8 py-2 text-white font-semibold hover:text-dashboard-3  rounded-lg cursor-pointer" >Agregar direccion</button>
+            </section>
+        </ng-template>
+
+        <div class="pt-8 space-y-3" >
+            <h3 class="text-dashboard-5 text-lg font-medium" >Entrega del producto :</h3>
+            <section class="border-2 border-e-dashboard-1 px-8 py-2 rounded-lg flex flex-col " >
+                <h5 class="text-dashboard-2 font-semibold text-xl" >{{getDateDelivery | date:'d \'de\' MMMM \'del\' y':'es'}}</h5>
+                <h6 class="font-medium text-dashboard-5" >Entrega entre 10:00 a.m a 6:00 p.m</h6>
+            </section>
+        </div>
+
+    </div>
+
+     <div *ngIf="value == 2" class="space-y-2" >
+        <h3 class="text-dashboard-5 text-lg font-medium py-1" >Elegir punto de entrega : </h3>
+        <ng-container *ngIf="branchData.length > 0" >
+            <ul class="space-y-4" >
+                @for (item of branchData; track $index) {
+                    <li 
+                    (click)="onChangeBranch(item.id)"
+                    [ngClass]="item.id == idBranch ? 'border-dashboard-1 bg-dashboard-1 text-white' : 'border-dashboard-3 text-dashboard-5' "
+                    class=" px-8 py-2 rounded-lg border-2 flex items-center space-x-4" >
+                        <i class="fa-solid fa-location-dot fa-lg "></i>    
+                        <h4 class="text-lg font-semibold" >{{item.location}}</h4>
+                        <h5 *ngIf="item.id == idBranch" class="text-sm" >Direccion escogida</h5>
+                </li>
+                }
+            </ul>
+        </ng-container>
+
+          <div class="pt-8 space-y-3" >
+            <h3 class="text-dashboard-5 text-lg font-medium" >Entrega del producto :</h3>
+            <section class="border-2 border-e-dashboard-1 px-8 py-2 rounded-lg flex flex-col " >
+                <h5 class="text-dashboard-2 font-semibold text-xl" >{{getDateDelivery | date:'d \'de\' MMMM \'del\' y':'es'}}</h5>
+                <h6 class="font-medium text-dashboard-5" >Entrega entre 10:00 a.m a 5:00 p.m</h6>
+            </section>
+        </div>
+    </div>
+
+    <div class="col-span-2 flex justify-center ">
+        <button
+        (click)="goToPay()"
+        class="w-1/2 my-5 bg-dashboard-1 text-white py-2 rounded-lg font-primary font-semibold text-lg cursor-pointer hover:text-dashboard-3"
+        type="submit"
+        >
+            Ir para el pago
+        </button>
+    </div>
+
+</section>

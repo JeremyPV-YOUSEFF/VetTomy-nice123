@@ -1,0 +1,157 @@
+<div class="">
+    <div class="flex justify-between border-b-2 pb-5">
+        <div class="">
+            <h4 class="font-primary text-dashboard-2 font-semibold text-lg" >{{productData.date | date:"d 'de' MMMM 'del' y" }}</h4>
+            <div class="flex *:px-2 font-primary text-dashboard-5 font-medium" >
+                <h5 >{{"#00"+productData.saleNumber + " | "}}</h5>
+                <h5>
+                    <ng-container>Total: </ng-container>
+                    <ng-container>{{ productData!.total | currency:'PEN':'symbol-narrow':'1.2-2' }}</ng-container>
+                    <ng-container> | </ng-container>
+                </h5>
+                <h5 >Por Veterinaria Tomy</h5>
+            </div>
+        </div>
+        <div class="">
+            @if (productData.pdfUrl && productData.pdfUrl.length>0) {
+                <a [href]="productData.pdfUrl" target="_blank" >
+                    <h3 class="text-dashboard-2 font-medium underline hover:text-dashboard-3 cursor-pointer">Ver comprobante de pago</h3>
+                </a>
+            }
+        </div>
+    </div>
+    <ul class="flex flex-col w-full py-4 space-y-4 font-primary" >
+        @for (item of productData.data; track $index) {
+            <li class="flex space-x-3 border-b-2 pb-3">
+                <shared-loading-image
+                [classStyle]="'size-24'"
+                [urlImage]="item.productUrl"
+                ></shared-loading-image>
+                <div class="flex flex-col " >
+                    <h3 class="text-dashboard-1 font-semibold">{{item.productName}}</h3>
+                    <h4 class="text-dashboard-5">Cantidad : {{item.quantity}}</h4>
+                    <h4 class="text-dashboard-2 font-medium">{{item.total | currency:'PEN':'symbol-narrow':'1.2-2' }}</h4>
+                </div>
+            </li>
+        } 
+    </ul>
+    <div class="grid grid-cols-3 gap-x-8 font-primary">
+        <section class="col-span-2  space-y-3" >
+            @if (productData.typePurchase == "Producto") {
+                <h2 class="text-dashboard-1 text-xl font-semibold border-b-2 pb-3 border-dashboard-2">Seguimiento del pedido</h2>
+                @if (productData.deliveryType == "Delivery") {
+                    @if (productData.state == 'Cancelado') {
+                        <div class="flex flex-col col-span-2 space-y-4">
+                            <h4 class="text-dashboard-8 font-medium text-xl">El pedido fue cancelado</h4>
+                            <h4 class="font-primary text-dashboard-1 text-xl font-medium" >Observacion</h4>
+                            <p class="outline-none border-2 w-full px-3  overflow-auto scroll-auto max-h-56 flex justify-start text-start border-dashboard-6 rounded-lg  py-2 focus:border-dashboard-2">
+                                {{productData.observation}}
+                                <br>
+                                Para mayor informacion contactanos a este numero : 987456132
+                            </p>
+                        </div>
+                    }@else {
+                        <div class="flex justify-between *:w-full">
+                            <section class="border-b-4 border-dashboard-1 py-3 pb-10 flex justify-center relative">
+                                <h4 class=" w-1/2 text-dashboard-5 font-semibold text-center">Validando el pago</h4>
+                                <div *ngIf="productData.state === 'Validando el pago' " 
+                                class="absolute size-5 rounded-full bg-dashboard-2 -bottom-5 -translate-1/2 left-1/2" ></div>
+                            </section>
+                            <section class="border-b-4 border-dashboard-1 py-3 flex justify-center relative">
+                                <h4 class=" w-1/2 text-dashboard-5 font-semibold text-center">Preparando pedido</h4>
+                                <div *ngIf="productData.state === 'Preparando pedido' " 
+                                class="absolute size-5 rounded-full bg-dashboard-2 -bottom-5 -translate-1/2 left-1/2" ></div>
+                            </section>
+                            <section class="border-b-4 border-dashboard-1 py-3 flex justify-center relative">
+                                <h4 class=" w-1/2 text-dashboard-5 font-semibold text-center">Llevando producto</h4>
+                                <div *ngIf="productData.state === 'Llevando producto' "  
+                                class="absolute size-5 rounded-full bg-dashboard-2 -bottom-5 -translate-1/2 left-1/2" ></div>
+                            </section>
+                            <section class="border-b-4 border-dashboard-1 py-3 flex justify-center relative">
+                                <h4 class=" w-1/2 text-dashboard-5 font-semibold text-center">Producto entregado</h4>
+                                <div *ngIf="productData.state === 'Producto entregado' " 
+                                class="absolute size-5 rounded-full bg-dashboard-2 -bottom-5 -translate-1/2 left-1/2" ></div>
+                            </section>
+                        </div>
+                        <div class="bg-dashboard-4 px-3 py-4 space-y-3 rounded-lg">
+                            <section class="flex items-center space-x-3">
+                                <i class="fa-solid fa-store text-dashboard-2 fa-lg"></i>
+                                <h4 class="text-xl font-medium text-dashboard-5">{{productData.deliveryType}}</h4>
+                            </section>
+                            <section class="flex space-x-3 font-medium">
+                                <h4 class="text-dashboard-2">Direccion :</h4>
+                                <h4 class="text-dashboard-5"> {{ productData.address}}</h4>
+                            </section>
+                            <section class="flex space-x-3 font-medium">
+                                <h4 class="text-dashboard-2">Fecha de entrega :</h4>
+                                <h4 class="text-dashboard-5"> {{ productData.deliveryDate |date:'dd/MM/YYYY'}}</h4>
+                            </section>
+                        </div>
+                    }
+                    
+                }@else {
+                    @if (productData.state == 'Cancelado') {
+                        <div class="flex flex-col col-span-2 space-y-4">
+                            <h4 class="text-dashboard-8 font-medium text-xl">El pedido fue cancelado</h4>
+                            <h4 class="font-primary text-dashboard-1 text-xl font-medium" >Observacion</h4>
+                            <p class="outline-none border-2 w-full px-3  overflow-auto scroll-auto max-h-56 flex justify-start text-start border-dashboard-6 rounded-lg  py-2 focus:border-dashboard-2">
+                                {{productData.observation}}
+                                <br>
+                                Para mayor informacion contactanos a este numero : 987456132
+                            </p>
+                        </div>
+                    }@else {
+                        <div class="flex justify-between *:w-full">
+                            <section class="border-b-4 border-dashboard-1 py-3 pb-10 flex justify-center relative">
+                                <h4 class=" w-1/2 text-dashboard-5 font-semibold text-center">Validando el pago</h4>
+                                <div *ngIf="productData.state === 'Validando el pago' " 
+                                class="absolute size-5 rounded-full bg-dashboard-2 -bottom-5 -translate-1/2 left-1/2" ></div>
+                            </section>
+                            <section class="border-b-4 border-dashboard-1 py-3 flex justify-center relative">
+                                <h4 class=" w-1/2 text-dashboard-5 font-semibold text-center">Preparando pedido</h4>
+                                <div *ngIf="productData.state === 'Preparando pedido' " 
+                                class="absolute size-5 rounded-full bg-dashboard-2 -bottom-5 -translate-1/2 left-1/2" ></div>
+                            </section>
+                            <section class="border-b-4 border-dashboard-1 py-3 flex justify-center relative">
+                                <h4 class=" w-1/2 text-dashboard-5 font-semibold text-center">Listo para recojo</h4>
+                                <div *ngIf="productData.state === 'Listo para recojo' " 
+                                class="absolute size-5 rounded-full bg-dashboard-2 -bottom-5 -translate-1/2 left-1/2" ></div>
+                            </section>
+                            <section class="border-b-4 border-dashboard-1 py-3 flex justify-center relative">
+                                <h4 class=" w-1/2 text-dashboard-5 font-semibold text-center">Producto recogido</h4>
+                                <div *ngIf="productData.state === 'Producto recogido' "
+                                class="absolute size-5 rounded-full bg-dashboard-2 -bottom-5 -translate-1/2 left-1/2" ></div>
+                            </section>
+                        </div>
+                        <div class="bg-dashboard-4 px-3 py-4 space-y-3 rounded-lg">
+                            <section class="flex items-center space-x-3">
+                                <i class="fa-solid fa-store text-dashboard-2 fa-lg"></i>
+                                <h4 class="text-xl font-medium text-dashboard-5">{{productData.deliveryType}}</h4>
+                            </section>
+                            <section class="flex space-x-3 font-medium">
+                                <h4 class="text-dashboard-2">Direccion :</h4>
+                                <h4 class="text-dashboard-5"> {{ productData.address}}</h4>
+                            </section>
+                        </div>
+                    }
+                }
+            }
+        </section>
+        <section class="col-span-1 flex flex-col space-y-3">
+            <h2 class="text-dashboard-1 text-xl font-semibold border-b-2 pb-3 border-dashboard-2">Resumen de pago</h2>
+            <div class="space-y-2 py-2 bg-dashboard-4 rounded-lg my-2 px-2 border border-slate-200">
+                <h5 class="font-medium text-dashboard-1">Metodo de pago: <span class="text-dashboard-2">{{productData.meansPayment}}</span> </h5>
+                <h5 class="font-medium text-dashboard-1">Tipo de recibo: <span class="text-dashboard-2">{{productData.receiptType}}</span></h5>
+            </div>
+            <div class="space-y-2 py-2 font-medium px-2">
+                @if (productData.deliveryPrice>0) {
+                    <h5 class="text-dashboard-1">Subtotal: <span class="text-dashboard-2">{{(+productData.total - +productData.deliveryPrice) | currency:'PEN':'symbol-narrow':'1.2-2' }}</span> </h5>
+                    <h5 class="text-dashboard-1">Delivery: <span class="text-dashboard-2">{{productData.deliveryPrice | currency:'PEN':'symbol-narrow':'1.2-2'}}</span>  </h5>
+                }@else {
+                    <h5 class="text-dashboard-1">Subtotal: <span class="text-dashboard-2">{{productData.subTotal| currency:'PEN':'symbol-narrow':'1.2-2'}}</span>  </h5>
+                }
+                <h5 class="text-dashboard-1">Total: <span class="text-dashboard-2">{{productData.total | currency:'PEN':'symbol-narrow':'1.2-2'}}</span> </h5>
+            </div>
+        </section>
+    </div>
+</div>

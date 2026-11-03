@@ -1,0 +1,50 @@
+<shared-header></shared-header>
+<div class="mx-g grid gap-10 grid-cols-12 py-16 relative">
+    <section class="col-span-4 space-y-5  ">
+        <div class="flex flex-col border-2 border-slate-200 space-y-5 items-center py-3 rounded-xl shadow-xl">
+            <h3 class="font-primary text-dashboard-1 font-semibold text-xl" >¡Hola {{receiveData?.name}}!</h3>
+            <section>
+                <shared-loading-image
+                    [urlImage]="customerData.banner"
+                    [classStyle]="'size-40 border-4 border-dashboard-2 rounded-full border-double'"
+                    [altImage]="customerData.banner"
+                ></shared-loading-image>
+            </section>
+            <button 
+            (click)="inputFile.click()"
+            class="bg-dashboard-1 p-2 rounded-lg text-white font-primary text-lg  cursor-pointer hover:text-dashboard-3" >Cambiar avatar
+            </button>
+            <input 
+            #inputFile
+            (change)="onFileSelected($event)"
+            accept="image/*"
+            style="display: none;"
+            type="file">
+        </div>
+        <ul class="font-primary">
+            @for (item of profileData ; track $index) {
+            <li 
+            class="w-full li-1 flex items-center px-2 py-3 space-x-4 cursor-pointer"
+            [routerLink]="item.router"
+            routerLinkActive="active-link"
+            >
+                <i class="{{item.icon}}"></i>
+                <h5 class="text-xl font-semibold">{{item.name}}</h5>
+            </li>
+            }
+            <li 
+            (click)="logOut()"
+            class="w-full li-1 flex items-center px-2 py-3 space-x-4 cursor-pointer"
+            >
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <h5 class="text-xl font-semibold">{{'Cerrar sesion'}}</h5>
+            </li>
+        </ul>
+                
+    </section>
+    <section class="col-span-8">
+        <router-outlet></router-outlet>
+    </section>
+</div>
+
+<p-toast></p-toast>

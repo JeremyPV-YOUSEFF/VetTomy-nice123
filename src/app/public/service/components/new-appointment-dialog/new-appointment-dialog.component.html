@@ -1,0 +1,143 @@
+<div class="grid grid-cols-2 w-full h-full">
+    <section class="flex justify-center px-20 flex-col space-y-5 relative">
+        <img src="./assets/image/imageApp.webp" alt="" class="w-full  h-96 opacity-20 absolute" >
+        <h4 class="font-primary text-dashboard-2 text-3xl relative">Reservar una cita</h4>
+        <div class="bg-slate-200 w-full h-3 relative"></div>
+        <p class="font-primary text-dashboard-5  text-lg relative" >Por favor, revisa 
+            cuidadosamente los detalles antes de confirmarla. Asegúrate de que la fecha, hora y servicio sean correctos. 
+            Si todo está listo, ¡haz clic en "Confirmar" para registrar tu cita y continuar con el pago de reserva !</p>
+    </section>
+    <section class="mx-10 space-y-4" >
+        <h3 class="font-secondary text-4xl text-dashboard-2 font-semibold" >Formulario de citas</h3>
+        <form [formGroup]="myForm" (ngSubmit)="onSubmit()" class="grid grid-cols-2 gap-y-3 gap-x-5" >
+
+            <div class="flex flex-col col-span-2 w-1/2 space-y-4">
+                <label for="scheduleId" class="font-primary text-dashboard-1 text-xl font-medium" >Empleados disponibles</label>
+                <select 
+                formControlName="employeId"
+                placeholder="Fecha" class="outline-none border-2 border-dashboard-6 rounded-lg px-3 py-2 focus:border-dashboard-2 cursor-pointer"
+                name="" id="scheduleId">
+                    <option value="0" hidden >Nuestros empleados</option>
+                    @for (item of employeeData; track $index) {
+                        <option [value]="item.id" class="bg-dashboard-3 text-white font-medium">{{item.fullName}}</option>
+                    }
+                </select>
+                <span *ngIf="isValidField('employeId')" class="text-dashboard-8 font-primary font-medium text-sm" >
+                    {{getFieldError('employeId')}}
+                </span>
+            </div>
+
+            <div class="flex flex-col col-span-1 space-y-4">
+                <label for="date" class="font-primary text-dashboard-1 text-xl font-medium" >Fecha</label>
+                <input 
+                formControlName="date"
+                id="date" [min]="minDate" [max]="maxDate" type="date" placeholder="Fecha" class="cursor-pointer outline-none border-2 border-dashboard-6 rounded-lg px-3 py-2 focus:border-dashboard-2" >
+                <span *ngIf="isValidField('date')" class="text-dashboard-8 font-primary font-medium text-sm" >
+                    {{getFieldError('date')}}
+                </span>
+            </div>
+            
+            <div class="flex flex-col col-span-1 space-y-4">
+                <label for="scheduleId" class="font-primary text-dashboard-1 text-xl font-medium" >Horarios disponibles</label>
+                <select 
+                formControlName="scheduleId"
+                placeholder="Fecha" class="outline-none border-2 border-dashboard-6 rounded-lg px-3 py-2 focus:border-dashboard-2 cursor-pointer"
+                name="" id="scheduleId">
+                    <option value="0" hidden >Elegir horario</option>
+                    @for (item of scheduleData; track $index) {
+                        <option [value]="item.id" class="bg-dashboard-3 text-white font-medium"  >{{item.startTime |changeTime}}</option>
+                    }
+                </select>
+                <span *ngIf="isValidField('scheduleId')" class="text-dashboard-8 font-primary font-medium text-sm" >
+                    {{getFieldError('scheduleId')}}
+                </span>
+            </div>
+
+            <div class="flex flex-col col-span-1 space-y-4">
+                <label for="serviceId" class="font-primary text-dashboard-1 text-xl font-medium" >Servicios</label>
+                <select 
+                formControlName="serviceId"
+                placeholder="Nuestros servicios" class="outline-none border-2 border-dashboard-6 rounded-lg px-3 py-2 focus:border-dashboard-2 cursor-pointer"
+                name="" id="serviceId">
+                    <option value="0" hidden >Elegir servicio</option>
+                    @for (item of productData; track $index) {
+                        <option [value]="item.id" class="bg-dashboard-3 text-white font-medium">{{item.name}}</option>
+                    }
+                </select>
+                <span *ngIf="isValidField('serviceId')" class="text-dashboard-8 font-primary font-medium text-sm" >
+                    {{getFieldError('serviceId')}}
+                </span>
+            </div>
+
+            <div class="flex flex-col col-span-1 space-y-4">
+                <label for="serviceId" class="font-primary text-dashboard-1 text-xl font-medium" >Mascotas</label>
+                <select 
+                formControlName="petId"
+                placeholder="Nuestros servicios" class="outline-none border-2 border-dashboard-6 rounded-lg px-3 py-2 focus:border-dashboard-2 cursor-pointer"
+                name="" id="serviceId">
+                    <option value="0" hidden >Elegir tu mascota</option>
+                    <option value="1" class="bg-dashboard-3 text-white font-medium"  >Nueva mascota</option>
+                    @for (item of petData; track $index) {
+                        <option [value]="item.id" class="bg-dashboard-3 text-white font-medium">{{item.name}}</option>
+                    }
+                </select>
+                <span *ngIf="isValidField('petId')" class="text-dashboard-8 font-primary font-medium text-sm" >
+                    {{getFieldError('petId')}}
+                </span>
+            </div>
+
+            <div class="flex flex-col col-span-1 space-y-4">
+                <label for="serviceId" class="font-primary text-dashboard-1 text-xl font-medium" >Establecimiento</label>
+                <select 
+                formControlName="branchId"
+                placeholder="Nuestros servicios" class="outline-none border-2 border-dashboard-6 rounded-lg px-3 py-2 focus:border-dashboard-2 cursor-pointer"
+                name="" id="serviceId">
+                    <option value="0" hidden >Elegir tu establecimiento</option>
+                    @for (item of branchData; track $index) {
+                        <option [value]="item.id" class="bg-dashboard-3 text-white font-medium">{{item.location}}</option>
+                    }
+                </select>
+                <span *ngIf="isValidField('branchId')" class="text-dashboard-8 font-primary font-medium text-sm" >
+                    {{getFieldError('branchId')}}
+                </span>
+            </div>
+
+            <div class="flex flex-col col-span-2 space-y-4">
+                <label for="reason" class="font-primary text-dashboard-1 text-xl font-medium" >Motivo <span class="text-dashboard-5 text-sm">*Opcional</span></label>
+                <textarea 
+                [rows]="3"
+                [cols]="1"
+                formControlName="reason"
+                placeholder="Ejemplo : Mi mascota tiene manchas blancas en sus encias"
+                class="outline-none border-2 w-full px-3 flex justify-start text-start border-dashboard-6 rounded-lg  py-2 focus:border-dashboard-2"
+                id="reason">
+                </textarea>
+                <span *ngIf="isValidField('reason')" class="text-dashboard-8 font-primary font-medium text-sm" >
+                    {{getFieldError('reason')}}
+                </span> 
+            </div>
+            
+            <div class="col-span-2 flex justify-between" >
+                <button
+                (click)="ref.close(false)"
+                type="button"
+                class="bg-dashboard-2 px-4 py-2 rounded-lg text-white text-lg cursor-pointer font-semibold hover:text-dashboard-3"
+                >Cancelar</button>
+                <button
+                type="submit"
+                [disabled]="this.state == 'Loading'"
+                [ngClass]="{
+                    'bg-dashboard-2 cursor-progress': this.state === 'Loading',
+                    'bg-dashboard-3': this.state == 'Success',
+                    'bg-red-400  cursor-not-allowed': this.state == 'Error',
+                    'bg-dashboard-1 hover:text-dashboard-3 cursor-pointer': this.state == '',
+                 }"
+                class="flex items-center space-x-5 px-4 py-2 rounded-lg text-white text-lg cursor-pointer font-semibold"
+                >
+                <h5>{{this.state=='Loading' ? 'Cargando' : (this.state == 'Error' ? 'Error' : 'Confirmar'  )  }}</h5>
+                <i *ngIf="this.state == 'Loading'" class="fa-solid fa-circle-notch animate-spin"></i>
+            </button>
+            </div>
+        </form>
+    </section>
+</div>

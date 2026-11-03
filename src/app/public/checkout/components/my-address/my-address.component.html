@@ -1,0 +1,30 @@
+<div class="" >
+    <ul class="scroll-auto space-y-3 h-[16.5rem] overflow-auto" >
+        @for (item of receiveData; track $index) {
+            <li 
+            (click)="onSelectAddress(item.id)"
+            [ngClass]="item.id == idAddress ? 'border-dashboard-1' : 'border-dashboard-6' "
+            class="border-2  rounded-xl px-4 cursor-pointer py-3 flex justify-between items-center" >
+                <section class="flex flex-col" >
+                    <h4 class="text-dashboard-5 font-medium text-lg">{{item.department}}, {{item.district}}</h4>
+                    <h5 class="text-dashboard-5 ">{{item.street}} {{item.streetNumber}} </h5>
+                </section>
+                <i 
+                (click)="editPopup(item.id)"
+                class="fa-solid fa-pen-to-square fa-xl cursor-pointer text-dashboard-1"></i>
+            </li>
+        }
+    </ul>
+    <div class="space-y-4 flex flex-col pt-6 items-center">
+        <button type="button"
+        (click)="newAddress()"
+        class="text-dashboard-2 underline hover:text-dashboard-3 cursor-pointer" 
+        >Añadir nueva direccion</button>
+        <button 
+        type="button" 
+        (click)="ref.close(idAddress)"
+        class="bg-dashboard-1 w-max px-10 py-2 rounded-lg text-lg text-white font-semibold cursor-pointer hover:text-dashboard-3">Confirmar</button>
+    </div>
+</div>
+
+<p-toast></p-toast>

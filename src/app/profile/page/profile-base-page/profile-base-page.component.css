@@ -1,0 +1,15 @@
+.li-1 {
+    color: #212124;
+    border-width: 1px;
+    border-color: #e2e8f0;
+}
+
+.li-1:hover {
+    color: #bbcef3;
+}
+
+.li-1.active-link{
+    color: #bbcef3;
+    background-color: #1f2b6c;
+    font-weight: bold;
+}

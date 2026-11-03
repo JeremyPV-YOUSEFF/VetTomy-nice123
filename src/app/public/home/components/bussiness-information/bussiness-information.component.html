@@ -1,0 +1,47 @@
+<section class="py-16 px-g space-y-3" >
+    <h3 class="title">Bienvenidos a la veterinaria tomy</h3>
+    <h4 class="subtitle">Un gran lugar donde salvamos vidas</h4>
+    
+    @if (informationBusiness?.description != undefined) {
+        <p class="paragraph">{{informationBusiness?.description}}</p>
+    }@else{
+        <shared-loading-text  class="cursor-progress"  [quantity]="8" [type]="1" ></shared-loading-text>
+    }
+        
+    <button
+    (click)="changeState()" 
+    *ngIf="!hidden;else moreInfo" class="cursor-pointer flex justify-center w-full items-center space-x-3 group  " type="button">
+        <h5 class="text-dashboard-2 font-semibold group-hover:text-dashboard-3">Leer mas</h5>
+        <i class="fa-solid fa-arrow-right text-dashboard-1 group-hover:text-dashboard-3"></i>
+    </button>
+    <ng-template #moreInfo>
+        <div class="space-y-6 py-10">
+            <div class="flex justify-center w-full">
+                <h4 class="title border-b-4 border-dashboard-1">Vision</h4>
+            </div>
+            @if (informationBusiness?.vision != undefined) {
+                <p class="paragraph">{{informationBusiness?.vision}}</p>
+            }@else{
+                <shared-loading-text   class="cursor-progress" [quantity]="4" [type]="1" ></shared-loading-text>
+            }
+            <div class="flex justify-center w-full">
+                <h4 class="title border-b-4 border-dashboard-1">Misiòn</h4>
+            </div>
+            @if (informationBusiness?.mission != undefined) {
+                <p class="paragraph">{{informationBusiness?.mission}}</p>
+            }@else{
+                <shared-loading-text class="cursor-progress" [quantity]="4" [type]="1" ></shared-loading-text>
+            }
+            <button
+            (click)="changeState()" 
+            class="flex justify-center w-full cursor-pointer items-center space-x-3 group" type="button">
+                <h5 class="text-dashboard-2 font-semibold group-hover:text-dashboard-3">Leer menos</h5>
+                <i class="fa-solid fa-arrow-right text-dashboard-1 group-hover:text-dashboard-3"></i>
+            </button>
+        </div>
+        
+    </ng-template>
+
+</section>
+
+

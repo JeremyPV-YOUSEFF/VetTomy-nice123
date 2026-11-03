@@ -1,0 +1,85 @@
+<div>
+    <div class="flex justify-between border-b-2 pb-5">
+        <div class="">
+            <h4 class="font-primary text-dashboard-2 font-semibold text-lg" >{{serviceData.date | date:"d 'de' MMMM 'del' y" }}</h4>
+            <div class="flex *:px-2 font-primary text-dashboard-5 font-medium" >
+                <h5 >{{"#00"+serviceData.saleNumber + " | "}}</h5>
+                <h5>
+                    <ng-container>Total: </ng-container>
+                    <ng-container>{{ serviceData!.total | currency:'PEN':'symbol-narrow':'1.2-2' }}</ng-container>
+                    <ng-container> | </ng-container>
+                </h5>
+                <h5 >Por Veterinaria Tomy</h5>
+            </div>
+        </div>
+        <div class="">
+            @if ( serviceData.pdfUrl && serviceData.pdfUrl.length>0 ) {
+                <a [href]="serviceData.pdfUrl" target="_blank" >
+                    <h3 class="text-dashboard-2 font-medium underline hover:text-dashboard-3 cursor-pointer">Ver comprobante de pago</h3>
+                </a>
+            }
+        </div>
+    </div>
+    <ul class="flex flex-col w-full py-4 space-y-4 font-primary" >
+        @for (item of serviceData.data; track $index) {
+            <li class="flex space-x-3 border-b-2 pb-3">
+                <shared-loading-image
+                [classStyle]="'size-24'"
+                [urlImage]="item.productUrl"
+                ></shared-loading-image>
+                <div class="flex flex-col " >
+                    <h3 class="text-dashboard-1 font-semibold">{{item.productName}}</h3>
+                    <h4 class="text-dashboard-5">Cantidad : {{item.quantity}}</h4>
+                    <h4 class="text-dashboard-2 font-medium">{{item.total | currency:'PEN':'symbol-narrow':'1.2-2' }}</h4>
+                    <!-- <h4 routerLink="/profile/myAppointment" class="text-dashboard-8 cursor-pointer font-medium underline">Ver mi cita</h4> -->
+                </div>
+            </li>
+        } 
+    </ul>
+    <div class="grid grid-cols-3 gap-x-8 font-primary">
+        <section class="col-span-2  space-y-8" >
+            <h2 class="text-dashboard-1 text-xl font-semibold border-b-2 pb-3 border-dashboard-2">Seguimiento de la reserva</h2>
+            <div class="flex justify-between *:w-full">
+                @if(serviceData.state == 'Cancelado'){
+                    <div class="flex flex-col col-span-2 space-y-4">
+                            <h4 class="text-dashboard-8 font-medium text-xl">La reseva fue cancelada</h4>
+                            <h4 class="font-primary text-dashboard-1 text-xl font-medium" >Observacion</h4>
+                            <p class="outline-none border-2 w-full px-3  overflow-auto scroll-auto max-h-56 flex justify-start text-start border-dashboard-6 rounded-lg  py-2 focus:border-dashboard-2">
+                                {{serviceData.observation}}
+                                <br>
+                                Para mayor informacion contactanos a este numero : 987456132
+                            </p>
+                        </div>
+                }@else {
+                    <section class="border-b-4 border-dashboard-1 py-3 pb-10 flex justify-center relative">
+                        <h4 class=" w-1/2 text-dashboard-5 font-semibold text-center">Validando el pago</h4>
+                        <div *ngIf="serviceData.state === 'Validando el pago' "  
+                        class="absolute size-5 rounded-full bg-dashboard-2 -bottom-5 -translate-1/2 left-1/2" ></div>
+                    </section>
+                    <section class="border-b-4 border-dashboard-1 py-3 flex justify-center relative">
+                        <h4 class=" w-1/2 text-dashboard-5 font-semibold text-center">Reserva confirmada </h4>
+                        <div *ngIf="serviceData.state === 'Reserva confirmada' "
+                        class="absolute size-5 rounded-full bg-dashboard-2 -bottom-5 -translate-1/2 left-1/2" ></div>
+                    </section>
+                }
+            </div>
+        </section>
+        
+        <section class="col-span-1 flex flex-col space-y-3">
+            <h2 class="text-dashboard-1 text-xl font-semibold border-b-2 pb-3 border-dashboard-2">Resumen de pago</h2>
+            <div class="space-y-2 py-2 bg-dashboard-4 rounded-lg my-2 px-2 border border-slate-200">
+                <h5 class="font-medium text-dashboard-1">Metodo de pago: <span class="text-dashboard-2">{{serviceData.meansPayment}}</span> </h5>
+                <h5 class="font-medium text-dashboard-1">Tipo de recibo: <span class="text-dashboard-2">{{serviceData.receiptType}}</span></h5>
+            </div>
+            <div class="space-y-2 py-2 font-medium px-2">
+                @if (serviceData.deliveryPrice>0) {
+                    <h5 class="text-dashboard-1">Subtotal: <span class="text-dashboard-2">{{(+serviceData.total - +serviceData.deliveryPrice) | currency:'PEN':'symbol-narrow':'1.2-2' }}</span> </h5>
+                    <h5 class="text-dashboard-1">Delivery: <span class="text-dashboard-2">{{serviceData.deliveryPrice | currency:'PEN':'symbol-narrow':'1.2-2'}}</span>  </h5>
+                }@else {
+                    <h5 class="text-dashboard-1">Subtotal: <span class="text-dashboard-2">{{serviceData.subTotal| currency:'PEN':'symbol-narrow':'1.2-2'}}</span>  </h5>
+                }
+                <h5 class="text-dashboard-1">Total: <span class="text-dashboard-2">{{serviceData.total | currency:'PEN':'symbol-narrow':'1.2-2'}}</span> </h5>
+            </div>
+        </section>
+    </div>
+</div>

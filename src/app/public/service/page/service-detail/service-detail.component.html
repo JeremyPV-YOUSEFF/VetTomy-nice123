@@ -1,0 +1,84 @@
+@if (serviceData) {
+    <section class="px-g py-16 grid grid-cols-12 gap-10" >
+        <div class="col-span-8 space-y-7 flex flex-col">
+            <span class="flex items-center space-x-3">
+                <i 
+                (click)="navigate()"
+                class="fa-solid fa-circle-arrow-left fa-2xl text-dashboard-1 hover:text-dashboard-3 cursor-pointer"></i>
+                <h3 class="font-corn text-3xl text-dashboard-1 font-semibold uppercase">{{serviceData.name}}</h3>
+            </span>
+            <p class=" font-inter text-lg text-dashboard-5 h-auto" >{{serviceData.description}}</p>
+            
+            @if (serviceData.activities && serviceData.activities.length>0) {
+                <ul class="grid grid-cols-2">
+                @for (item of serviceData.activities.split(','); track $index) {
+                    <li class="flex items-center space-x-2 paragraph-1">
+                        <i class="fa-solid fa-circle fa-sm text-dashboard-2"></i>
+                        <h5 class="font-inter text-lg" >{{item}}</h5>
+                    </li>
+                }
+            </ul>
+            }@else {
+                <h5 class="font-inter text-lg" >Niguna actividad</h5>
+            }
+            <!-- <div class="space-y-3">
+                <h5 class="font-corn text-2xl font-semibold text-dashboard-1" >Observaciones</h5>
+                <p class="font-inter text-lg font-normal" >{{serviceData?.observations}}</p>
+            </div>
+
+            <div class="space-y-3 ">
+                <h5 class="font-corn text-2xl font-semibold text-dashboard-1">Requerimientos</h5>
+                <p class="font-inter text-lg font-normal" >{{serviceData?.requirements}}</p>
+            </div> -->
+        </div>
+        <section class="col-span-4 w-full space-y-10">
+            @for (item of serviceData.image; track $index) {
+                <div class="">
+                    <shared-loading-image
+                    class="space-y-5"
+                    [urlImage]="item.url"
+                    [altImage]="serviceData.name || ''"
+                    [classStyle]="'w-full h-52 rounded-xl '"
+                    ></shared-loading-image>
+                </div>
+            }
+        </section>
+        <section class="col-span-12 grid grid-cols-2 gap-10" >
+            <div class="">
+                <h5 class="font-corn text-2xl font-semibold text-dashboard-1" >Observaciones</h5>
+                @if (serviceData.observations && serviceData.observations.length>0) {
+                    <ul class="">
+                    @for (item of serviceData.observations.split(','); track $index) {
+                        <li class="flex items-start space-x-2 paragraph-1">
+                            <i class="fa-solid fa-circle fa-sm text-dashboard-2 py-4"></i>
+                            <h5 class="font-inter text-lg" >{{item}}</h5>
+                        </li>
+                    }
+                </ul>
+                }@else {
+                    <h5 class="font-inter text-lg" >Niguna observacion</h5>
+                }
+            </div>
+
+            <div class="">
+                <h5 class="font-corn text-2xl font-semibold text-dashboard-1" >Requerimientos</h5>
+                @if (serviceData.requirements && serviceData.requirements.length>0) {
+                    <ul class="">
+                    @for (item of serviceData.requirements.split(','); track $index) {
+                        <li class="flex items-start space-x-2 paragraph-1">
+                            <i class="fa-solid fa-circle fa-sm text-dashboard-2 py-4"></i>
+                            <h5 class="font-inter text-lg" >{{item}}</h5>
+                        </li>
+                    }
+                </ul>
+                }@else {
+                    <h5 class="font-inter text-lg" >Niguna requerimiento</h5>
+                }
+            </div>
+            
+        </section>
+        <button (click)="newAppointment()" type="button" class="bg-dashboard-1 px-10 py-2 w-60 rounded-xl font-primary text-white text-lg hover:text-dashboard-3 cursor-pointer" >Registar cita</button>
+    </section>
+}@else {
+    <h4>Cargando ...</h4>
+}

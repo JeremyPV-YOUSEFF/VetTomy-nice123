@@ -1,0 +1,33 @@
+<section class="flex flex-col space-y-6" >
+    <div #mapContainer id="map" style="height: 400px; width: 100%;"></div>
+    <form [formGroup]="myForm" class="space-y-6" >
+        <div class="col-span-2 flex flex-col space-y-2">
+            <label for="location" class="font-primary text-dashboard-1 text-xl font-medium flex items-center" >Direccion : </label>
+            <input type="text"
+            [readOnly]="true"
+            id="location"
+            placeholder="Nombre" 
+            formControlName="location" 
+            class="outline-none border-2 w-full px-3 flex justify-start text-start border-dashboard-6 rounded-lg  py-2 focus:border-dashboard-2" >
+        </div>
+         <div class="col-span-3 flex flex-col space-y-3">
+            <label for="reference" class="font-primary text-dashboard-1 text-xl font-medium flex items-center" >Referencia</label>
+            <textarea 
+            [rows]="2"
+            [cols]="1"
+            formControlName="reference"
+            placeholder="Ejemplo: Porton negro o rejillas verdes"
+            class="outline-none border-2 w-full px-3 flex justify-start text-start border-dashboard-6 rounded-lg  py-2 focus:border-dashboard-2"
+            id="reference">
+            </textarea>
+            <span *ngIf="isValidField('reference')" class="text-dashboard-8 font-primary font-medium text-sm" >
+                {{getFieldError('reference')}}
+            </span>
+        </div>
+        <div class="flex justify-end ">
+            <button 
+            (click)="createAddress()"
+            type="button" class="px-16 py-2 bg-dashboard-1 text-white hover:text-dashboard-3 rounded-lg " >Confirmar</button>
+        </div>
+    </form>
+</section>

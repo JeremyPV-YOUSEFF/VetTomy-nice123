@@ -1,0 +1,42 @@
+@if (productData) {
+    <section class="px-5 py-3 gap-5 w-full h-full border-2 border-slate-200 rounded-lg grid grid-cols-3">
+        <div class="col-span-2 space-y-4">
+            <h4 class="subtitle-1" >{{productData.name}}</h4>
+            <p class="paragraph-1 line-clamp-8" >{{productData.description}}</p>
+            <div class="">
+                <h5 class="text-dashboard-1 text-lg font-medium pb-3">Actividades</h5>
+                @if (productData.activities && productData.activities.length>0) {
+                    <ul class="grid grid-cols-2">
+                    @for (item of productData.activities.split(','); track $index) {
+                        <li class="flex items-center space-x-2 paragraph-1">
+                            <i class="fa-solid fa-circle fa-sm text-dashboard-2"></i>
+                            <h5>{{item}}</h5>
+                        </li>
+                    }
+                    </ul>
+                }
+            </div>
+            <button
+            (click)="newAppointment()"
+            type="button"
+            class="bg-dashboard-1 cursor-pointer px-5 py-2 rounded-lg font-primary text-lg text-white hover:text-dashboard-3 flex justify-center w-max"
+            >
+                Registrar Cita
+            </button>
+        </div>
+        <picture class="col-span-1 space-y-10 h-full">
+            @for (item of productData.image; track $index) {
+                <div class="flex flex-col justify-between">
+                    <shared-loading-image 
+                    [urlImage]="item.url" 
+                    [altImage]="item.url"
+                    [classStyle]="'border border-slate-200 w-full h-40 rounded-lg'"
+                    ></shared-loading-image>
+                </div>
+            }
+        </picture>
+    </section>
+    <p-toast></p-toast>
+}@else{
+    <h4>Cargando</h4>
+}

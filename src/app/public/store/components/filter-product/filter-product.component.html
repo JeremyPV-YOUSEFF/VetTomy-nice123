@@ -1,0 +1,122 @@
+<div class="space-y-5 ">
+    <div class="bg-dashboard-1 flex space-x-5 items-center px-3 py-3 rounded-lg">
+        <i class="fa-solid fa-sliders fa-xl text-white"></i>
+        <h3 class="font-primary text-white text-xl uppercase font-semibold">Filtros</h3>
+    </div>
+    @if (this.listBrands.length && this.listCategories.length>0 ) {
+        <form  class="space-y-5" >
+
+            <fieldset *ngIf="showDeleteParams" class="flex flex-col *:space-x-3 space-y-3 font-primary border-2 border-slate-200 rounded-lg px-3 py-4" >
+                <h4 (click)="onDeleteParams()" class="font-primary text-lg font-medium underline hover:text-dashboard-2 cursor-pointer">Eliminar busquedas</h4>
+            </fieldset>
+
+            <fieldset class="flex flex-col *:space-x-3 space-y-3 font-primary border-2 border-slate-200 rounded-lg px-3 py-4">
+                <legend class="px-2 font-secondary text-2xl text-dashboard-1 font-black" >Buscador</legend>
+                <div class="">
+                    <label  class="w-full relative flex items-center" >
+                        <input 
+                        [formControl]="searchInputProduct"
+                        (input)="bySearchProduct()"
+                        type="search" 
+                        placeholder="Buscar producto .." 
+                        class="w-full italic focus:not-italic text-base font-primary font-medium pl-2 py-2 outline-none  border-2 border-slate-200 focus:border-none focus:bg-slate-100 rounded-lg">
+                    </label>
+                </div>   
+            </fieldset>
+
+            <fieldset class="flex flex-col *:space-x-3 space-y-3 font-primary border-2 border-slate-200 rounded-lg px-3 py-4">
+                <legend class="px-2 font-secondary text-2xl text-dashboard-1 font-black" >Tipo de Mascota</legend>
+                <div class="">
+                    <label for="gato" class="flex space-x-2 items-center cursor-pointer">
+                        <!-- <input type="checkbox" name="" id="gato" class="accent-dashboard-1 hover:accent-dashboard-2 size-5 cursor-pointer"> -->
+                        <p-checkbox 
+                            class="accent-amber-950"
+                            inputId="gato" 
+                            name="group" 
+                            value="Gato" 
+                            size="large"
+                            [(ngModel)]="selectedTypePet"
+                            (onChange)="onChangeTypePet()"
+                        />
+                        <h4 class="font-primary text-lg font-medium" >Gato</h4>
+                    </label>
+                </div>   
+                <div class="">
+                    <label for="perro" class="flex space-x-2 items-center cursor-pointer">
+                        <p-checkbox 
+                            class="accent-amber-950"
+                            inputId="perro" 
+                            name="group" 
+                            value="Perro" 
+                            size="large"
+                            [(ngModel)]="selectedTypePet"
+                            (onChange)="onChangeTypePet()"
+                        />
+                        <h4 class="font-primary text-lg font-medium" >Perro</h4>
+                    </label>
+                </div> 
+            </fieldset>
+    
+            <fieldset class="flex flex-col *:space-x-3 space-y-3 font-primary border-2 border-slate-200 rounded-lg px-3 py-4">
+                <legend class="px-2 font-secondary text-2xl text-dashboard-1 font-black" >Marca</legend>
+                <div class="space-y-2">
+                    <label  class="w-full relative flex items-center" >
+                        <input 
+                        [formControl]="searchInputBrand"
+                        (input)="searchBrand()"
+                        type="search" 
+                        placeholder="Buscar marca .." 
+                        class="w-full italic focus:not-italic text-base font-primary font-medium pl-2 py-2 outline-none  border-2 border-slate-200 focus:border-none focus:bg-slate-100 rounded-lg">
+                    </label>
+                    <!-- <h5 class="text-sm hover:underline cursor-pointer text-dashboard-5 hover:text-dashboard-2" >Mostar todas las marcas</h5> -->
+                    <div class="scroll-auto space-y-1 h-32 overflow-auto"  >
+                        @for (brand of listBrands; track $index) {
+                            <div class="flex space-x-3">
+                                <p-checkbox 
+                                    class="accent-amber-950"
+                                    [inputId]="brand.name" 
+                                    name="group" 
+                                    [value]="brand.name" 
+                                    size="large"
+                                    [(ngModel)]="selectedBrand"
+                                    (onChange)="onChangeBrand()"
+                                />
+                                <label [for]="brand.name" class="flex space-x-2 items-center cursor-pointer">
+                                    <h4 class="font-primary text-lg font-medium" >{{brand.name}}</h4>
+                                    <!-- <input  [value]="brand.name" type="checkbox" name="" [id]="brand.name" class="accent-dashboard-1 hover:accent-dashboard-2 size-5 cursor-pointer"> -->
+                                </label>
+                            </div> 
+                        }@empty {
+                            <h5 class="text-lg font-primary font-semibold">No hay resultados</h5>
+                        }
+                    </div>
+                </div>
+            </fieldset>
+    
+            <fieldset class="flex flex-col *:space-x-3 space-y-3 font-primary border-2 border-slate-200 rounded-lg px-3 py-4">
+                <legend class="px-2 font-secondary text-2xl text-dashboard-1 font-black" >Categoria</legend>
+                <div class="scroll-auto space-y-1 h-32 overflow-auto">
+                    @for (item of listCategories; track $index) {
+                        <label [for]="item.name" class="flex space-x-2 items-center cursor-pointer">
+                            <p-checkbox 
+                                    class="accent-amber-950"
+                                    [inputId]="item.name" 
+                                    name="group" 
+                                    [value]="item.name" 
+                                    size="large"
+                                    [(ngModel)]="selectedCategories"
+                                    (onChange)="onChangeCategories()"
+                                />
+                            <h4 class="font-primary text-lg font-medium" >{{item.name}}</h4>
+                        </label>
+                    }
+                </div>   
+               
+            </fieldset>
+    
+        </form>
+    }@else {
+        <shared-loading-text [type]="9" ></shared-loading-text>
+    }
+    
+</div>

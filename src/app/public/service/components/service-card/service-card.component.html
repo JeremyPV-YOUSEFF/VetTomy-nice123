@@ -1,0 +1,19 @@
+<div class="border border-slate-300 rounded-lg min-h-96">
+    <picture>
+        <shared-loading-image 
+        [urlImage]="cardService.image[0].url"
+        [classStyle]="'h-48 w-full'"
+        [altImage]="cardService.name" ></shared-loading-image>
+    </picture>
+    <section class="px-2 space-y-5 py-2">
+        <h3 class="font-secondary text-2xl text-dashboard-1 font-semibold uppercase h-14 ">{{cardService.name}}</h3>
+        <p class="line-clamp-3 font-primary text-base text-dashboard-5 h-[4.4rem]" >{{cardService.description}}</p>
+        <button 
+        [routerLink]="['/dashboard/serviceDetail',cardService.id]" routerLinkActive="router-link-active" 
+        type="button" 
+        class="flex space-x-2 items-center group" >
+            <h4 class="font-primary text-dashboard-2 font-medium group-hover:text-dashboard-3 cursor-pointer ">Mostrar mas</h4>
+            <i class="fa-solid fa-arrow-right text-dashboard-1 group-hover:text-dashboard-3"></i>
+        </button>
+    </section>
+</div>

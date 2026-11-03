@@ -1,0 +1,34 @@
+<div class="border-2 border-slate-200 rounded-lg grid grid-cols-2 h-96">
+    <picture
+    [routerLink]="['/dashboard/storeDetails/',product.id]"
+    >
+        <shared-loading-image 
+        [classStyle]="'h-96 w-full'"
+        [altImage]="product.name"
+        [urlImage]="product.image[0].url"  ></shared-loading-image>
+    </picture>
+    <div class="space-y-3 py-3 h-96 flex flex-col justify-between px-5">
+        <div class="">
+            <h4 class="font-secondary text-2xl font-extrabold px-2 text-dashboard-2 pt-3">{{product.brandName | uppercase }}</h4>
+            <h5 class="font-primary text-2xl font-semibold text-dashboard-1 px-2" >{{product.name | titlecase }}</h5>
+        </div>
+        <div class=" space-y-8">
+            <ul class="flex justify-between font-primary " >
+                @if (product.priceWithDiscount > 0) {
+                    <li class="text-dashboard-3 line-through text-xl">{{product.price  | currency:'PEN':'symbol-narrow':'1.2-2'  }}</li>
+                    <li class="text-2xl text-dashboard-5" >{{product.priceWithDiscount | currency:'PEN':'symbol-narrow':'1.2-2' }}</li>
+                }@else {
+                    <li class="text-dashboard-5 text-2xl">{{product.price  | currency:'PEN':'symbol-narrow':'1.2-2'  }}</li>  
+                }
+            </ul>
+            <button
+            (click)="addItem(product)"
+            class="bg-dashboard-1 cursor-pointer w-full font-primary text-white hover:text-dashboard-3 text-lg font-semibold  rounded-lg py-3"
+            type="button"
+            >
+            Agregar al carrito
+            </button>
+        </div>
+        
+    </div>
+</div>

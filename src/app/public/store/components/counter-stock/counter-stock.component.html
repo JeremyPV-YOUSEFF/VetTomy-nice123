@@ -1,0 +1,33 @@
+@if (type == 1) {
+    <div class="flex space-x-2">
+        <button 
+        (click)="decrease()"
+        type="button" class="size-10 bg-dashboard-1 rounded-full cursor-pointer" >
+            <i class="fa-solid fa-minus fa-xl text-white hover:text-dashboard-3"></i>
+        </button>
+        <h4 class="size-10 border border-slate-300 font-primary font-semibold text-lg rounded-lg flex items-center justify-center text-dashboard-2">{{value}}</h4>
+        <button 
+        (click)="increase()"
+        type="button" class="size-10 bg-dashboard-1 rounded-full cursor-pointer" >
+            <i class="fa-solid fa-plus fa-xl text-white hover:text-dashboard-3"></i>
+        </button>
+    </div>
+}@else {
+    <section class="flex space-x-7 items-center">
+        <div class="flex space-x-2">
+            <button 
+            (click)="decrease()"
+            type="button" class="size-10 bg-dashboard-1 rounded-full cursor-pointer" >
+                <i class="fa-solid fa-minus fa-xl text-white hover:text-dashboard-3"></i>
+            </button>
+            <h4 class="size-10 border border-slate-300 font-primary font-semibold text-lg rounded-lg flex items-center justify-center text-dashboard-2">{{value}}</h4>
+            <button 
+            (click)="increase()"
+            type="button" class="size-10 bg-dashboard-1 rounded-full cursor-pointer" >
+                <i class="fa-solid fa-plus fa-xl text-white hover:text-dashboard-3"></i>
+            </button>
+        </div>
+        <div class="flex items-center font-primary text-xl font-medium h-10 text-dashboard-5 px-2">{{ (value * price) | currency:'PEN':'symbol-narrow':'1.2-2'  }}</div>
+    </section>
+    
+}

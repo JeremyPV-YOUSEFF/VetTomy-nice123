@@ -1,0 +1,42 @@
+<form  [formGroup]="myForm" class="py-4" >
+    <section class="flex items-center justify-between  space-x-4 ">
+        <div class="">
+            <h4 class="text-dashboard-5 font-medium" > {{receiveSaleData()?.totalItems}} compras</h4>
+        </div>
+        <div class=""></div>
+        <div class="flex space-x-3">
+            <div class="flex flex-col space-y-2 w-48">
+                <label for="" class="text-dashboard-1 font-semibold text-lg" >Ordenar por :</label>
+                <select formControlName="sortBy" name="" id="" class="outline-none  border-2 border-dashboard-6 rounded-lg px-3 py-2 focus:border-dashboard-2" >
+                    <option class="bg-slate-300 rounded-3xl focus:rounded-xl"  value="dateDesc">Mas recientes</option>
+                    <option class="bg-slate-300 rounded-3xl focus:rounded-xl"  value="dateAsc">Mas antiguos</option>
+                </select>
+            </div>
+            <div class="flex flex-col space-y-2 w-48">
+                <label for="" class="text-dashboard-1 font-semibold text-lg" >Tipo de compra</label>
+                <select formControlName="typePurchase" name="" id="" class="outline-none  border-2 border-dashboard-6 rounded-lg px-3 py-2 focus:border-dashboard-2" >
+                    <option class="bg-slate-300 rounded-3xl focus:rounded-xl" value="">Todo</option>
+                    <option class="bg-slate-300 rounded-3xl focus:rounded-xl"  value="Producto">Producto</option>
+                    <option class="bg-slate-300 rounded-3xl focus:rounded-xl"  value="Servicio">Servicio</option>
+                </select>
+            </div>
+        </div>
+    </section>
+</form>
+<div class="flex justify-end py-4">
+    <section class="flex space-x-1">
+        <div (click)="turnBackPage()" class="bg-dashboard-1 rounded-full size-8 flex items-center justify-center cursor-pointer">
+            <i class="fa-solid fa-chevron-left text-white fa-lg"></i>
+        </div>
+        @for (item of [].constructor(receiveSaleData()?.totalPages); track $index) {
+            <div 
+            [ngClass]="$index+1 === receiveSaleData()?.currentPage ? 'text-white' : 'text-dashboard-5' "
+            (click)="changePage($index+1)" class="cursor-pointer flex font-semibold items-center justify-center text-xl  bg-dashboard-3 size-8 rounded-lg">
+                <h3>{{$index+1}}</h3>
+            </div>
+        }
+        <div (click)="advancePage()" class="bg-dashboard-1 rounded-full size-8 flex items-center justify-center cursor-pointer">
+            <i class="fa-solid fa-chevron-right text-white fa-lg"></i>
+        </div>
+    </section>
+</div>

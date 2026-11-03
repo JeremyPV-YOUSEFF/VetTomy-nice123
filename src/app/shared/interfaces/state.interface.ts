@@ -1,0 +1,1 @@
+export type State = ''|'Loading'|'Start'|'Success'|'Error'

@@ -1,0 +1,33 @@
+<div
+    class="col-span-1 w-full h-[28rem] border-2 border-slate-200 rounded-lg">
+    <picture 
+    (click)="redirectionTo()"
+    [routerLink]="['/dashboard/storeDetails',product.id]" routerLinkActive="router-link-active"
+    class="h-[14rem] cursor-pointer">
+        <shared-loading-image 
+        [urlImage]="product.image[0].url "
+        [altImage]="product.name"
+        [classStyle]="'bg-cover h-[14rem] w-full'"
+         ></shared-loading-image>
+    </picture>
+    <div class="h-[14rem] flex flex-col justify-between">
+        <h4 class="font-secondary text-xl font-extrabold px-2 text-dashboard-2 pt-3">{{product.brandName | uppercase }}</h4>
+        <h5 class="font-primary text-[1rem] font-semibold text-dashboard-1 px-2 line-clamp-2  h-12 " >{{product.name | titlecase }}</h5>
+        @if (product.priceWithDiscount > 0) {
+
+            <div class="flex justify-between items-center">
+                <h6 class="font-primary text-sm font-medium text-dashboard-3 px-2 line-through">{{product.price| currency:'PEN':'symbol-narrow':'1.2-2'  }}</h6>
+                <h6 class="font-primary text-lg font-medium text-dashboard-5 px-2">{{product.priceWithDiscount | currency:'PEN':'symbol-narrow':'1.2-2'  }}</h6>
+            </div>
+        }@else {
+            <h6 class="font-primary text-lg font-medium h-10 text-dashboard-5 px-2">{{product.price | currency:'PEN':'symbol-narrow':'1.2-2'  }}</h6>  
+        }
+        <button 
+        (click)="addCart(product)"
+        class="buttonCustome cursor-pointer"
+        type="button">
+            Agregar al carrito
+        </button>
+    </div>
+</div>
+<!--   [routerLink]="['/dashboard/storeDetails',product.id]" routerLinkActive="router-link-active"  -->

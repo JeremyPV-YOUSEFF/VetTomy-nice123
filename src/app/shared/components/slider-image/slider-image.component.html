@@ -1,0 +1,15 @@
+<picture *ngIf="image.length>0;else loadImage" class="bg-dashboard-1 w-full h-[35rem]">
+    <img  [ngClass]="{'hidden':onLoad}" [src]="image" (load)="onLoadImage()" alt="" class="w-full h-[35rem]">
+</picture>
+
+<div  *ngIf="onLoad  && image.length>0" class="w-full h-[35rem]">
+    <div class="w-full h-[35rem] bg-slate-200 animate-pulse cursor-progress">
+    </div>
+    <p-progressBar  mode="indeterminate" [style]="{ height: '6px' }" color="#1f2b6c" ></p-progressBar>
+</div>
+
+<ng-template #loadImage >
+    <div class="w-full h-[35rem] bg-slate-200 animate-pulse cursor-progress">
+    </div>
+    <p-progressBar  mode="indeterminate" [style]="{ height: '6px' }" color="#1f2b6c" ></p-progressBar>
+</ng-template>

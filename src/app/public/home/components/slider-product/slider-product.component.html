@@ -1,0 +1,27 @@
+<article class="py-10 space-y-4 mx-g">
+    @if (typeScreen == 'HomePage') {
+        <h3 class="title" >Calidad y precio</h3>
+        <h4 class="subtitle" >Nuestros productos</h4>
+    }@else {
+        <h4 class="font-secondary text-3xl py-3 text-dashboard-1 font-semibold" >Productos recomendados</h4>
+    }
+    @if (listProducts.length>0) {
+        <section class="relative grid grid-cols-5 gap-8">
+            <div 
+            (click)="backCard()"
+            class="absolute left-0 -translate-y-1/2 top-1/2 group bg-dashboard-1 hover:cursor-pointer hover:animate-none animate-pulse rounded-full size-12 flex items-center justify-center">
+                <i class="fa-solid fa-left-long fa-lg text-dashboard-3 group-hover:text-white"></i>
+            </div>
+            @for (product of listProducts; track $index) {
+                <store-card-product [product]="product" ></store-card-product>
+            } 
+            <div 
+            (click)="advancedCard()"
+            class="absolute right-0 -translate-y-1/2 top-1/2 group bg-dashboard-1 hover:cursor-pointer hover:animate-none animate-pulse rounded-full size-12 flex items-center justify-center">
+                <i class="fa-solid fa-right-long fa-lg text-dashboard-3 group-hover:text-white"></i>
+            </div>
+        </section>
+    }@else {
+        <shared-loading-text class="cursor-progress" [type]="5" ></shared-loading-text>
+    }
+</article>

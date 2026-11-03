@@ -1,0 +1,27 @@
+<div 
+*ngIf="state == true"
+(click)="changeState()"
+class="fixed bottom-5 right-5 size-16 bg-dashboard-3 rounded-full flex items-center justify-center hover:animate-pulse hover:border-2 border-dashboard-2 cursor-pointer group">
+    <i class="fa-solid fa-message fa-xl text-white group-hover:text-dashboard-2"></i>
+</div>
+
+<div 
+*ngIf="state == false"
+class="fixed bottom-3 right-3 w-1/4 h-[28rem] border border-dashboard-6  rounded-xl">
+    <div class="flex justify-between py-3 px-4 bg-dashboard-3 rounded-t-xl" >
+        <section class="flex space-x-3 items-center" >
+            <img src="./assets/image/imageChat.avif" alt="" class="size-10 rounded-full" >
+            <h3 class="text-dashboard-1 text-lg font-semibold" >ChatBot</h3>
+        </section>
+        <section class="flex items-center space-x-5">
+            <i (click)="changeState()" class="fa-solid fa-minus fa-xl text-white cursor-pointer"></i>
+        </section>
+    </div>
+    <div class="bg-slate-100 h-[74%]" >
+        rgtef
+    </div>
+    <div class="bg-dashboard-1 h-[10%] mx-2 rounded-xl flex items-center px-3">
+        <input type="text" placeholder="Escribir mensaje ... " class="text-white font-medium w-full outline-none" >
+        <i class="fa-solid fa-play text-white cursor-pointer"></i>
+    </div>
+</div>

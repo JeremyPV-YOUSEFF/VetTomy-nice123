@@ -1,0 +1,30 @@
+<div class="">
+    <section class="flex justify-between">
+        <h4 class="text-dashboard-2 font-semibold text-2xl py-2">Confirma tu correo electronico</h4>
+        <button type="button" (click)="closeDialog()" class="cursor-pointer"  >
+            <i class="fa-solid fa-xmark fa-2xl text-red-400 cursor-pointer"></i>
+        </button>
+    </section>
+    <h5 class="text-dashboard-5 py-2">Nosotros estamos enviando un codigo a <span class="text-dashboard-2 font-semibold">{{this.recieveData?.email}}</span></h5>
+    <section class="space-y-5">
+        <h4 class="text-dashboard-5 font-semibold">Ingresa el codigo</h4>
+        <div class="card flex flex-col space-y-8">
+            <p-inputotp [(ngModel)]="value" [size]="'large'" class="focus:bg-amber-300" />
+            <button
+            type="button"
+            (click)="verificationEmail()"
+            [ngClass]="{
+                'bg-dashboard-2 cursor-progress': this.state === 'Loading',
+                'bg-dashboard-3 ': this.state == 'Success',
+                'bg-red-400 cursor-not-allowed': this.state == 'Error',
+                'bg-dashboard-1 hover:text-dashboard-3 cursor-pointer ': this.state == '',
+             }"
+            class=" text-white rounded-lg py-3 font-semibold text-xl flex justify-between px-4 items-center"
+            >
+            <h5>{{this.state=='Loading' ? 'Cargando' : (this.state == 'Error' ? 'Error, intentelo nuevamente' : 'Continuar'  )  }}</h5>
+            <i *ngIf="this.state == '' " class="fa-solid fa-chevron-right fa-lg" ></i>
+            <i *ngIf="this.state == 'Loading'" class="fa-solid fa-circle-notch animate-spin"></i>
+        </button>
+        </div>
+    </section>
+</div>

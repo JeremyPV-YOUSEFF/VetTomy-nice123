@@ -1,0 +1,48 @@
+<div class="space-y-3">
+    <div class="">
+        <h4 class="font-primary text-dashboard-2 text-lg font-semibold" >{{productData?.brandName}}</h4>
+        <h4 class="font-primary text-dashboard-1 font-semibold text-3xl" >{{productData?.name}}</h4>
+    </div>
+    <div class="pt-4">
+        <h5 class="font-primary text-dashboard-5 text-xl font-medium" >Calificacion General</h5>
+        <section class="flex justify-center space-x-4 py-2">
+            @for (item of [].constructor(5); track $index) {
+                <i 
+                (click)="setStart($index+1)"
+                [ngClass]="$index+1<=counterStart? 'text-dashboard-2' : 'text-slate-200' "
+                class="text-5xl not-italic cursor-pointer" >★</i>
+            }
+        </section>
+    </div>
+    <div class="">
+        <form [formGroup]="myForm" >
+            <div class="col-span-2 flex flex-col space-y-2">
+                <label for="comment" class="font-primary text-dashboard-5 text-xl font-medium" >Reseña </label>
+                <textarea 
+                rows="3"
+                placeholder="Ejemplo: ¡Excelente producto!"
+                formControlName="comment"
+                class="font-primary focus:border-dashboard-2 w-full pl-5 pr-5 py-2 outline-none border-[1.5px] border-dashboard-6 rounded-lg"
+                id="comment" ></textarea>
+                <span *ngIf="isValidField('comment')" class="text-dashboard-5 font-primary font-medium text-sm" >
+                    {{getFieldError('comment')}}
+                </span>
+            </div>
+        </form>
+    </div>
+    <button 
+        [disabled]="this.state == 'Loading'"
+        (click)="newReview()"
+        [ngClass]="{
+            'bg-dashboard-2 cursor-progress': this.state === 'Loading',
+            'bg-dashboard-3': this.state == 'Success',
+            'bg-red-400  cursor-not-allowed': this.state == 'Error',
+            'bg-dashboard-1 hover:text-dashboard-3 cursor-pointer': this.state == '',
+         }"
+        type="submit"
+        class=" flex items-center space-x-4 px-10 py-2 text-white font-primary rounded-xl text-xl font-semibold "
+        >
+        <h5>{{this.state=='Loading' ? 'Cargando' : (this.state == 'Error' ? 'Error' : 'Enviar'  )  }}</h5>
+        <i *ngIf="this.state == 'Loading'" class="fa-solid fa-circle-notch animate-spin"></i>
+    </button>
+</div>

@@ -1,0 +1,7 @@
+<ul class="flex space-x-2 items-center">
+    @for (item of [].constructor(5); track $index; ) {
+        <li
+        [ngClass]="ratingGeneral >= $index+1 ? 'text-dashboard-1': 'text-slate-200' "
+        [class]="sizeStart">★</li>
+    }
+</ul>

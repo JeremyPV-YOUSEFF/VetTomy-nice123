@@ -1,0 +1,84 @@
+
+<section class="mx-g py-16 grid grid-cols-12 gap-10 min-h-[56svh]" >
+    <div class="col-span-8 space-y-4">
+        <div class="flex items-center space-x-5">
+            <i 
+            routerLink="/dashboard/store"
+            class="fa-solid fa-circle-arrow-left fa-2xl text-dashboard-1 hover:text-dashboard-3 cursor-pointer"></i>
+            <h3 class="font-primary  text-2xl font-semibold text-dashboard-2 ">Carrito de compras</h3>
+        </div>
+        @if (productData.length>0) {
+            <article class="space-y-3" >
+                @for (item of productData; track $index) {
+                    <section class="border-2 border-slate-200 space-x-3 px-3 py-6 rounded-lg flex " >
+                        <shared-loading-image
+                        [urlImage]="item.product.image[0].url"
+                        [classStyle]="'size-16 bg-white'"   
+                        ></shared-loading-image>
+                        <div class="w-48">
+                            <h5 class="font-secondary text-xl font-extrabold px-2 text-dashboard-2 ">{{item.product.brandName}}</h5>
+                            <h4 class="font-primary text-[1.2rem] font-semibold text-dashboard-1 px-2 ">{{item.product.name}}</h4>
+                        </div>  
+                        <div class="flex items-center w-28">
+                            @if (item.product.priceWithDiscount > 0) {
+                                <div class="flex flex-col  justify-between items-center">
+                                    <h6 class="font-primary text-sm font-medium text-dashboard-3 px-2 line-through">{{item.product.price| currency:'PEN':'symbol-narrow':'1.2-2'  }}</h6>
+                                    <h6 class="font-primary text-lg font-medium text-dashboard-5 px-2">{{item.product.priceWithDiscount | currency:'PEN':'symbol-narrow':'1.2-2'  }}</h6>
+                                </div>
+                            }@else {
+                                <h6 class="font-primary text-lg font-medium h-10 text-dashboard-5 px-2">{{item.product.price | currency:'PEN':'symbol-narrow':'1.2-2'  }}</h6>  
+                            }
+                        </div>
+                        <store-counter-stock 
+                        class="flex items-center w-88" 
+                        [idProduct]="item.product.id"
+                        [price]="item.product.priceWithDiscount>0 ? item.product.priceWithDiscount : item.product.price"
+                        [value]="item.quantity"
+                        [stock]="item.product.stock" ></store-counter-stock>
+                        <div class="flex items-center px-4">
+                            <i 
+                            (click)="deleteProduct(item.product.id)"
+                            class="fa-solid fa-trash fa-2xl text-dashboard-3 cursor-pointer hover:text-dashboard-2"></i>
+                        </div>
+                    </section>      
+                }
+            </article>
+        }@else {
+            <h4 class="text-dashboard-5 font-primary text-lg">No hay ningun producto agregado al carrito de compras</h4>
+        }
+    </div>
+    <div class="col-span-4  border-2 border-slate-200 rounded-lg w-full space-y-2">
+        <h4 class="font-primary text-dashboard-5 font-semibold text-xl px-4 py-2">Resumen de compras</h4>
+        <section>
+            <div class="flex justify-between px-4">
+                <h4 class="font-primary text-dashboard-2 font-semibold text-lg">Subtotal:</h4>
+                <h5 class="font-primary text-lg font-medium h-10 text-dashboard-5 px-2 ">{{cartTotalValue?.subTotal| currency:'PEN':'symbol-narrow':'1.2-2' }}</h5>
+            </div>
+            <div class="flex justify-between px-4">
+                <h4 class="font-primary text-dashboard-2 font-semibold text-lg">Delivery:</h4>
+                <h5 class="font-primary text-lg font-medium h-10 text-dashboard-5 px-2 ">
+                    {{cartTotalValue?.subTotal == 0 ? 0 : cartTotalValue?.deliveryPrice | currency:'PEN':'symbol-narrow':'1.2-2' }}
+                </h5>
+            </div>
+            <div class="flex justify-between px-4">
+                <h4 class="font-primary text-dashboard-2 font-semibold text-lg">Total:</h4>
+                <h5 class="font-primary text-lg font-medium h-10 text-dashboard-5 px-2 ">
+                    {{cartTotalValue?.subTotal == 0 ? 0 : cartTotalValue?.total| currency:'PEN':'symbol-narrow':'1.2-2' }}
+                </h5>
+            </div>
+        </section>
+        <div class="flex justify-center w-full">
+            <button
+            [ngClass]="totalCart===0 ?'cursor-not-allowed':'cursor-pointer' "
+            [disabled]="totalCart===0"
+            type="button"
+            class="bg-dashboard-1 flex items-center  px-14 py-2 rounded-lg text-white font-primary text-lg hover:text-dashboard-3 "
+            >Seguir con la compra</button>    
+        </div>
+        <p class="px-4 pt-2">*Impuestos incluidos dentro del precio final</p>
+        <p class="px-4 py-2">*Por el momento solo realizan envios a Huancayo</p>
+    </div>
+</section>
+
+
+<p-toast></p-toast>

@@ -1,0 +1,57 @@
+<header class="*:px-g *:py-3 sticky top-0 w-full z-50">
+    <article class="bg-white">
+        <ul class="flex justify-between">
+            <li class="flex space-x-2 items-center">
+                <img src="./assets/image/logo.jpg" alt="" class="size-12 rounded-full ">
+                <h2 class="text-4xl font-secondary font-semibold text-dashboard-1 uppercase">Veterinaria 
+                    <span class="text-dashboard-2">Tomy</span>
+                </h2>
+            </li>   
+            <li class="flex space-x-5 font-primary">
+                <!-- Iterable Icons of menu -->
+                @for (item of iconMenus; track $index) {
+                    <section class="flex items-center gap-3">
+                        <i class="{{item.icon}} fa-xl text-dashboard-1" ></i>
+                        <div class="flex flex-col">
+                            <h3 class="text-dashboard-1 text-lg font-semibold">{{item.name}}</h3>
+                            <h4 class="text-dashboard-2 text-sm font-medium">{{item.description}}</h4>
+                        </div>
+                    </section>
+                }
+            </li>
+        </ul>
+    </article>
+    <article class="bg-dashboard-1 font-primary">
+        <menu class="flex space-x-7">
+            @for (item of Menus; track $index) {
+                <li 
+                (click)="onChangePage()"
+                class="text-xl li-1 hover:text-dashboard-3 font-normal cursor-pointer"
+                    [routerLink]="[item.route]"
+                    routerLinkActive="active-link"
+                >{{item.name}}</li>
+            }
+            <!-- @for (item of menuItems; track $index) {
+                <li 
+                (click)="onChangePage()"
+                class="text-xl text-white font-normal cursor-pointer"
+                    [routerLink]="item.path"
+                    routerLinkActive="text-dashboard-3 font-semibold"
+                >{{item.title}}</li>
+            } -->
+            @if ( recieveData == undefined) {
+                <li 
+                class="text-xl li-1 hover:text-dashboard-3 font-normal cursor-pointer"
+                    [routerLink]="'/auth/sign-in'"
+                    routerLinkActive="active-link"
+                >Mi cuenta</li>
+            }@else {
+                <li 
+                class="text-xl li-1 hover:text-dashboard-3 font-normal cursor-pointer"
+                    [routerLink]="'/profile/myProfile'"
+                    routerLinkActive="active-link"
+                >Mi perfil</li>
+            }
+        </menu>
+    </article>
+</header>

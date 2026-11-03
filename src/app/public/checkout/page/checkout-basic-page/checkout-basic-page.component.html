@@ -1,0 +1,39 @@
+<div class="mx-g py-16 grid grid-cols-3">
+    <div>
+        <div 
+        [routerLink]=" paymentStepsData!.id == true ? '/dashboard/checkout/id' : null "
+        routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{exact:true}"
+        class="flex flex-col  items-center space-y-3 cursor-pointer">
+            <i 
+            routerLinkActive="active-link"
+            class="size-10 isActive   border-dashboard-1  font-primary pl-3 text-xl font-semibold border-2 rounded-full flex items-center justify-between"><h4>1</h4></i>
+            <h4 class="font-primary  text-dashboard-2 text-xl font-semibold" >Identificacion</h4>
+        </div>
+    </div>
+
+    <div class="">
+        <div 
+        [routerLink]=" paymentStepsData!.address == true ? '/dashboard/checkout/delivery' : null "
+        routerLinkActive="active-link"
+        class="flex flex-col items-center space-y-3 cursor-pointer">
+            <i 
+            routerLinkActive="active-link"
+            class="size-10 isActive border-dashboard-1 font-primary pl-3 text-xl font-semibold border-2 rounded-full flex items-center justify-between"><h4>2</h4></i>
+            <h4 class="font-primary text-dashboard-2 text-xl font-semibold" >Entrega</h4>
+        </div>
+    </div>
+    
+    <div class="">
+        <div 
+        [routerLink]=" paymentStepsData!.payment == true ? '/dashboard/checkout/pay' : null "
+        routerLinkActive="active-link"
+        class="flex flex-col items-center space-y-3 cursor-pointer">
+            <i 
+            routerLinkActive="active-link"
+            class="size-10 isActive border-dashboard-1 font-primary pl-3 text-xl font-semibold border-2 rounded-full flex items-center justify-between"><h4>3</h4></i>
+            <h4 class="font-primary text-dashboard-2 text-xl font-semibold" >Pago</h4>
+        </div>
+    </div>
+</div>
+<router-outlet></router-outlet>

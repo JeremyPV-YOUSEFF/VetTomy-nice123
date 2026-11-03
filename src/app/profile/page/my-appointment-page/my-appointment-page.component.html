@@ -1,0 +1,68 @@
+<section class="border-2 border-slate-200 px-5 py-10 rounded-lg space-y-3 shadow-2xl" >
+    <h2 class="uppercase font-secondary text-2xl text-dashboard-2 font-black" >Mi citas</h2>
+    <p class="font-primary text-lg text-dashboard-5 font-medium" >Aqui encontraras todas tus citas</p>
+    @if (appointment && appointment.totalItems>0) {
+        <div class="grid grid-cols-2 gap-10" >
+        <profile-filter-appointment class="col-span-2" 
+        (sendSort)="receiveChangeSort($event)" (sendPage)="receiveChangePage($event)" [receiveAppointmentData]="appointment"
+        ></profile-filter-appointment>
+        @for (item of appointmentData; track $index) {
+            <div class="border-2 px-3 py-5 border-dashboard-6 rounded-lg">
+                <div class="space-y-3">
+                    <h4 class="font-primary text-dashboard-1 font-semibold text-lg">Datos generales: </h4>
+                    <section class="grid grid-cols-2" >
+                        <h5 class="font-primary text-dashboard-2 font-medium text-lg" >Estado:</h5>
+                        <h6 
+                        [ngClass]="{
+                            'text-dashboard-1': item.type == 'En proceso',
+                            'text-dashboard-8': item.type == 'Cancelado',
+                            'text-dashboard-7': item.type == 'Finalizado',
+                        }"
+                        class="font-primary  font-semibold" >{{item.type}}</h6>
+                    </section>
+
+                    @if (item.type == "Cancelado") {
+                        <section class="flex flex-col" >
+                            <h5 class="font-primary text-dashboard-2 font-medium text-lg" >Razon de la cancelacion:</h5>
+                            <h6 class="font-primary text-dashboard-5 font-normal" >{{item.reasonCancellation == '' ? 'Ninguno' : item.reasonCancellation }}</h6>
+                        </section>
+                    }@else {
+                        <section class="grid grid-cols-2" >
+                            <h5 class="font-primary text-dashboard-2 font-medium text-lg" >Nombre:</h5>
+                            <h6 class="font-primary text-dashboard-5 font-normal" >{{item.fullName}}</h6>
+                        </section>
+                        <section class="grid grid-cols-2" >
+                            <h5 class="font-primary text-dashboard-2 font-medium text-lg" >Especialistas:</h5>
+                            <h6 class="font-primary text-dashboard-5 font-normal" >{{item.employeeName}}</h6>
+                        </section>
+                        <section class="grid grid-cols-2" >
+                            <h5 class="font-primary text-dashboard-2 font-medium text-lg" >Mascota:</h5>
+                            <h6 class="font-primary text-dashboard-5 font-normal" >{{item.petName}}</h6>
+                        </section>
+                        <div class="w-full h-2 bg-dashboard-6"></div>
+                        <section class="grid grid-cols-2" >
+                            <h5 class="font-primary text-dashboard-2 font-medium text-lg" >Servicio:</h5>
+                            <h6 class="font-primary text-dashboard-5 font-normal" >{{item.serviceName}}</h6>
+                        </section>
+                        <section class="grid grid-cols-2" >
+                            <h5 class="font-primary text-dashboard-2 font-medium text-lg" >Fecha:</h5>
+                            <h6 class="font-primary text-dashboard-5 font-normal" >{{item.date}}</h6>
+                        </section>
+                        <section class="grid grid-cols-2" >
+                            <h5 class="font-primary text-dashboard-2 font-medium text-lg" >Hora:</h5>
+                            <h6 class="font-primary text-dashboard-5 font-normal" >{{item.time |changeTime}} </h6>
+                        </section>
+                        <div class="w-full h-2 bg-dashboard-6"></div>
+                        <section class="flex flex-col" >
+                            <h5 class="font-primary text-dashboard-2 font-medium text-lg" >Razon:</h5>
+                            <h6 class="font-primary text-dashboard-5 font-normal" >{{item.reason == '' ? 'Ninguno' : item.reason }}</h6>
+                        </section>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+    }@else {
+        <h4 class="font-primary text-lg text-dashboard-5" >No hay ninguna cita</h4>
+    }
+</section>

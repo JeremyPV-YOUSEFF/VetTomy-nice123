@@ -1,0 +1,28 @@
+<form [formGroup]="myForm" class="col-span-4 flex justify-between font-primary">
+    <select 
+    formControlName="sortProdut"
+    name="" id=""  class="outline-none border-2 border-slate-200 rounded-lg px-4 py-2 text-lg font-medium focus:bg-dashboard-4 focus:border-dashboard-2">
+        <option value="" hidden >Ordenar por :</option>
+        @for (item of productSortData; track $index) {
+            <option [value]="item.value">{{item.name}}</option>
+        }
+    </select>
+    <ul class="flex space-x-2">
+        <li 
+        (click)="changePage('Left')"
+        class="size-8 bg-dashboard-1 flex justify-center items-center group cursor-pointer">
+            <i class="fa-solid fa-chevron-left text-white group-hover:text-dashboard-3"></i>
+        </li>
+        @for (item of [].constructor(dataProduct?.totalPages); track $index) {
+            <li 
+            (click)="changePage('',$index+1)"
+            [ngClass]="$index+1 == dataProduct?.currentPage ? 'bg-dashboard-1 text-white font-semibold' : 'bg-dashboard-3 font-medium' "
+            class="size-8  rounded-lg hover:text-white flex items-center justify-center font-primary  cursor-pointer" >{{$index+1}}</li>
+        }
+        <li 
+        (click)="changePage('Right')"
+        class="size-8 bg-dashboard-1 flex justify-center items-center group cursor-pointer">
+            <i class="fa-solid fa-chevron-right text-white group-hover:text-dashboard-3"></i>
+        </li>
+    </ul>
+</form>

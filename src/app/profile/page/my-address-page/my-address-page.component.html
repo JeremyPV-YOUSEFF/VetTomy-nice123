@@ -1,0 +1,57 @@
+<section class="border-2 border-slate-200 px-5 py-10 rounded-lg space-y-3 shadow-2xl" >
+    <h2 class="uppercase font-secondary text-2xl text-dashboard-2 font-black" >Mis direcciones</h2>
+    <div class="flex justify-between items-center">
+        <p class="font-primary  text-dashboard-5 font-medium w-2/3" >Guardar tus direcciones te permitirá una experiencia de compra sin complicaciones y un envío más rápido.</p>
+        <button 
+            (click)="openPopup()"
+            type="button" 
+            class=" group hover:text-dashboard-3 flex items-center bg-dashboard-1  w-max px-3 py-2 space-x-2 rounded-lg text-white cursor-pointer">
+                <i class="fa-solid fa-plus group-hover:text-dashboard-3"></i>
+                <h6>Añadir direccion</h6>
+        </button>
+    </div>
+    <div class="grid grid-cols-2 gap-10 font-primary" >
+        @for (item of addressData; track $index) {
+            <div class="border px-3 py-2 rounded-lg border-dashboard-6 flex flex-col space-y-3">
+                <section class="grid grid-cols-2" >
+                    <h4 class="text-dashboard-1 font-semibold text-lg" >Departamento</h4>
+                    <h5 class="text-dashboard-5 text-lg">: {{item.department}}</h5>
+                </section>
+                <section class="grid grid-cols-2" >
+                    <h4 class="text-dashboard-1 font-semibold text-lg">Provincia</h4>
+                    <h5 class="text-dashboard-5 text-lg">: {{item.region}}</h5>
+                </section>
+                <section class="grid grid-cols-2" >
+                    <h4 class="text-dashboard-1 font-semibold text-lg">Distrito</h4>
+                    <h5 class="text-dashboard-5 text-lg">: {{item.district}}</h5>
+                </section>
+                <section class="grid grid-cols-2" >
+                    <h4 class="text-dashboard-1 font-semibold text-lg">Avenida / Calle</h4>
+                    <h5 class="text-dashboard-5 text-lg">: {{item.street}}</h5>
+                </section>
+                <section class="grid grid-cols-2" >
+                    <h4 class="text-dashboard-1 font-semibold text-lg">Numero</h4>
+                    <h5 class="text-dashboard-5 text-lg">: {{item.streetNumber}}</h5>
+                </section>
+                <section class="flex flex-col h-full" >
+                    <h4 class="text-dashboard-1 font-semibold text-lg">Referencia</h4>
+                    <h5 class="text-dashboard-5 text-lg ">{{item.reference}}</h5>
+                </section>
+                <section class="w-full flex justify-end" >
+                        <button 
+                        (click)="editPopup(item.id)"
+                        class="bg-dashboard-1 w-max px-8 cursor-pointer group py-2 flex items-center space-x-3 rounded-lg">
+                            <i class="fa-solid fa-pen-to-square fa-lg text-white group-hover:text-dashboard-3"></i>
+                            <h5 class="text-white font-medium group-hover:text-dashboard-3">Editar</h5>
+                        </button>
+                </section>
+            </div>
+        }@empty {
+            <div class="flex justify-between col-span-2">
+                <h4 class="font-primary text-lg text-dashboard-5 w-2/3" >No hay ninguna direccion guardada</h4>
+            </div>
+        }
+    </div>
+</section>
+
+<p-toast></p-toast>

@@ -1,0 +1,96 @@
+
+<section class="border-2 border-slate-200 px-5 py-10 rounded-lg space-y-3 shadow-2xl" >
+    <h2 class="uppercase font-secondary text-2xl text-dashboard-2 font-black" >Mi perfil</h2>
+    <p class="font-primary text-lg text-dashboard-5 font-medium" >Aqui encontraras tus datos personales</p>
+    <form class="grid grid-cols-2 gap-x-4 gap-y-3" [formGroup]="myForm" >
+        <div class="col-span-2 flex flex-col space-y-2">
+            <label for="name" class="font-primary text-dashboard-1 text-lg font-semibold" >Nombre : </label>
+            <input type="text"
+             id="name"
+             placeholder="Nombre" 
+             formControlName="name" 
+             class="font-primary focus:border-dashboard-2 w-full pl-5 py-2 outline-none border-[1.5px] border-dashboard-6 rounded-lg" >
+             <span *ngIf="isValidField('name')" class="text-dashboard-8 font-primary font-medium text-sm" >
+                {{getFieldError('name')}}
+            </span>
+        </div>
+        <div class="col-span-2 flex flex-col space-y-2">
+            <label for="lastName" class="font-primary text-dashboard-1 text-lg font-semibold" >Apellidos : </label>
+            <input type="text"
+             id="lastName"
+             placeholder="Apellidos" 
+             formControlName="lastName" 
+             class="font-primary focus:border-dashboard-2 w-full pl-5 py-2 outline-none border-[1.5px] border-dashboard-6 rounded-lg" >
+             <span *ngIf="isValidField('lastName')" class="text-dashboard-8 font-primary font-medium text-sm" >
+                {{getFieldError('lastName')}}
+            </span>
+        </div>
+        <div class="col-span-1 flex flex-col space-y-2">
+            <label for="cellPhoneNumber" class="font-primary text-dashboard-1 text-lg font-semibold" >Telefono : </label>
+            <input type="text"
+             id="cellPhoneNumber"
+             placeholder="Telefono" 
+             formControlName="cellPhoneNumber" 
+             class="font-primary focus:border-dashboard-2 w-full pl-5 py-2 outline-none border-[1.5px] border-dashboard-6 rounded-lg" >
+             <span *ngIf="isValidField('cellPhoneNumber')" class="text-dashboard-8 font-primary font-medium text-sm" >
+                {{getFieldError('cellPhoneNumber')}}
+            </span>
+        </div>
+       
+        <div class="col-span-1 flex flex-col space-y-2">
+            <label for="birthday" class="font-primary text-dashboard-1 text-lg font-semibold" >Fecha de nacimiento : </label>
+            <input type="date"
+             id="birthday"
+             placeholder="Fecha de nacimiento" 
+             formControlName="birthday" 
+             class="font-primary focus:border-dashboard-2 w-full pl-5 py-2 outline-none border-[1.5px] border-dashboard-6 rounded-lg" >
+             <span *ngIf="isValidField('birthday')" class="text-dashboard-8 font-primary font-medium text-sm" >
+                {{getFieldError('birthday')}}
+            </span>
+        </div>
+         <div class="col-span-1 flex flex-col space-y-2">
+            <label for="documentType" class="font-primary text-dashboard-1 text-lg font-semibold" >Tipo de documento </label>
+            <select name="" id="documentType" formControlName="documentType"
+            class="font-primary focus:border-dashboard-2 w-full pl-5 py-2 outline-none border-[1.5px] border-dashboard-6 rounded-lg" >
+                <option value="DNI">DNI</option>
+                <option value="RUC">RUC</option>
+            </select>
+             <span *ngIf="isValidField('documentType')" class="text-dashboard-8 font-primary font-medium text-sm" >
+                {{getFieldError('documentType')}}
+            </span>
+        </div>
+        <div class="col-span-1 flex flex-col space-y-2">
+            <label for="documentNumber" class="font-primary text-dashboard-1 text-lg font-semibold" >Numero de documento: </label>
+            <input type="text"
+             id="documentNumber"
+             formControlName="documentNumber"
+             placeholder="DNI" 
+             class="font-primary focus:border-dashboard-2 w-full pl-5 py-2 outline-none border-[1.5px] border-dashboard-6 rounded-lg" >
+             <span *ngIf="isValidField('documentNumber')" class="text-dashboard-8 font-primary font-medium text-sm" >
+                {{getFieldError('documentNumber')}}
+            </span>
+        </div>
+        <div class="col-span-2 pt-4">
+            <button
+            [disabled]="this.state == 'Loading'"
+            (click)="openDialog()"
+            [ngClass]="{
+                'bg-dashboard-2 cursor-progress': this.state === 'Loading',
+                'bg-dashboard-3': this.state == 'Success',
+                'bg-red-400  cursor-not-allowed': this.state == 'Error',
+                'bg-dashboard-1 hover:text-dashboard-3 cursor-pointer': this.state == '',
+            }"
+            class=" px-3 py-2 flex items-center space-x-4 font-primary rounded-lg text-lg text-white hover:text-dashboard-3 cursor-pointer"
+            type="button"
+            >
+            <h5>{{this.state=='Loading' ? 'Cargando' : (this.state == 'Error' ? 'Error' : 'Guardar cambios'  )  }}</h5>
+            <i *ngIf="this.state == 'Loading'" class="fa-solid fa-circle-notch animate-spin"></i>
+        </button>
+        </div>
+        <p *ngIf="!this.myForm.dirty && this.state == 'Loading' ">
+            Ningun campo a sido modificado
+        </p>
+    </form>
+</section>
+
+<p-toast></p-toast>

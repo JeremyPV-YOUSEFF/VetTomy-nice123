@@ -1,0 +1,68 @@
+<section class="mx-g my-10 px-5 py-6 rounded-lg shadow-2xl grid grid-cols-3 " >
+    <div class="col-span-2 flex flex-col space-y-4">
+        <div class="flex items-center space-x-4">
+            <i class="w-10 h-10 flex items-center justify-center bg-dashboard-1 text-white rounded-full text-2xl" >3</i>
+            <h5 class="font-secondary text-2xl text-dashboard-2 font-semibold" >Pago</h5>
+        </div>
+        <h4 class="font-primary">Recuerde que todas las entregas solo se realizan en Huancayo</h4>
+    </div>
+    <div class="mx-3 space-y-4">
+        <div class="flex justify-between items-center">
+            <h3 class="text-dashboard-2 font-semibold text-lg ">Resumen de la compra</h3>
+            <h6 
+            [routerLink]="['/dashboard/shoppingCart']" routerLinkActive="router-link-active" 
+            class="underline text-dashboard-5 hover:text-dashboard-3 cursor-pointer" >Volver al carrito</h6>
+        </div>
+
+        <div class="">
+            <ul
+            class="border rounded-lg border-slate-200 p-2"
+            >
+                @for (item of cartItems ; track $index) {
+                    <li class="flex space-x-4 items-center font-primary">
+                        <shared-loading-image
+                        [classStyle]="'size-10'"
+                        [urlImage]="item.product.image[0].url"
+                        ></shared-loading-image>
+                        <div class="">
+                            <h4 class="text-dashboard-1 font-semibold">{{item.product.name}}</h4>
+                            @if (item.product.priceWithDiscount>0) {
+                                <h5>{{item.product.priceWithDiscount | currency:'PEN':'symbol-narrow':'1.2-2' }}</h5>
+                            }@else {
+                                <h5>{{item.product.price | currency:'PEN':'symbol-narrow':'1.2-2' }}</h5>
+                            }
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+
+        <div class="font-primary">
+            <div class=" border-b-2 pb-4">
+                <section class="flex justify-between">
+                    <h4 class="text-dashboard-1 font-semibold text-lg">Subtotal</h4>
+                    <h5 class="text-dashboard-5 font-medium">{{cartTotalValue?.subTotal | currency:'PEN':'symbol-narrow':'1.2-2' }}</h5>
+                </section>
+                <section class="flex justify-between">
+                    <h4 class="text-dashboard-1 font-semibold text-lg">Gastos de envio</h4>
+                    <h5 class="text-dashboard-5 font-medium">{{cartTotalValue?.deliveryPrice | currency:'PEN':'symbol-narrow':'1.2-2' }}</h5>
+                </section>
+            </div>
+            <section class="flex justify-between">
+                <h4 class="text-dashboard-1 font-semibold text-lg">Total</h4>
+                <h5 class="text-dashboard-5 font-medium">{{cartTotalValue?.total | currency:'PEN':'symbol-narrow':'1.2-2' }}</h5>
+            </section>
+        </div>
+
+        <button
+        class="bg-dashboard-1 w-full flex items-center justify-center space-x-4 rounded-lg py-3 font-primary text-white hover:text-dashboard-3 cursor-pointer font-semibold"
+        (click)="newSale()"
+        type="button"
+        >
+            <i class="fa-solid fa-lock"></i>
+            <h3>Comprar ahora</h3>
+        </button>
+    </div>
+</section>
+
+<p-toast></p-toast>

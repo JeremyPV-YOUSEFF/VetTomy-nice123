@@ -1,0 +1,7 @@
+.ui-progressbar-value {
+    background-color: #ef5439 !important;
+  }
+  .customProgress .ui-progressbar-value {
+    background-color: #000000;
+  }
+  

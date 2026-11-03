@@ -1,0 +1,37 @@
+<article class="py-10 space-y-4">
+    <h3 class="title" >Atenciòn de confianza</h3>
+    <h4 class="subtitle" >Nuestros especialistas</h4>
+    <section class="flex px-g justify-center w-full  space-x-[3%]">
+        @for (employee of listEmployee; track $index) {
+            <div class="col-span-1 rounded-lg border border-slate-300 w-[30%]">
+                <figure>
+                    <shared-loading-image
+                    [urlImage]="employee.banner" 
+                    [altImage]="employee.fullName" 
+                    [classStyle]="'h-80 w-full rounded-t-lg'"
+                    ></shared-loading-image>
+                </figure>
+                <div class="bg-dashboard-3 flex flex-col py-4 items-center space-y-2">
+                    <h3 class="text-2xl font-secondary font-bold text-dashboard-1">{{employee.fullName}}</h3>
+                    <h4 class="text-xl font-primary font-bold text-dashboard-1">{{employee.position}}</h4>
+                    <ul>
+                        <li><i class="fa-brands fa-facebook fa-xl cursor-pointer text-dashboard-1"></i></li>
+                    </ul>
+                </div>
+                <button 
+                type="button"
+                class="
+                cursor-pointer
+                buttonCustome"
+                [routerLink]="['/dashboard/employeeDetail',employee.id]"
+                (click)="goToPerfil()"
+                >
+                    Ver Perfil
+                </button>
+            </div>
+        }@empty {
+            <shared-loading-text class="cursor-progress" [type]="2" ></shared-loading-text>
+        }
+        
+    </section>
+</article>
